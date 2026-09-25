@@ -3,20 +3,39 @@
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
       "Shared": {
         "$path": "src/shared"
+      },
+      "Remotes": {
+        "$className": "Folder",
+        "Possess": { "$className": "RemoteEvent" },
+        "Unpossess": { "$className": "RemoteEvent" },
+        "PossessionChanged": { "$className": "RemoteEvent" },
+        "VacuumState": { "$className": "RemoteEvent" },
+        "VacuumAim": { "$className": "UnreliableRemoteEvent" },
+        "Revive": { "$className": "RemoteEvent" },
+        "HitFeedback": { "$className": "RemoteEvent" }
+      },
+      "GameState": {
+        "$className": "Folder"
       }
     },
     "ServerScriptService": {
+      "$className": "ServerScriptService",
       "Server": {
         "$path": "src/server"
       }
     },
     "StarterPlayer": {
+      "$className": "StarterPlayer",
       "StarterPlayerScripts": {
-        "Client": {
-          "$path": "src/client"
-        }
+        "$className": "StarterPlayerScripts",
+        "$path": "src/client"
+      },
+      "StarterCharacterScripts": {
+        "$className": "StarterCharacterScripts",
+        "$path": "src/character"
       }
     }
   }
