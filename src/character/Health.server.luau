@@ -1,2 +1,0 @@
--- Replaces Roblox's default "Health" script so characters don't regenerate.
--- Healing only happens through the revive system.
