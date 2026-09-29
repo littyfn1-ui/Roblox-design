@@ -1,0 +1,272 @@
+{
+  "source": "assets/gameplay.mp4",
+  "bpm": 120,
+  "duration": 22,
+  "note": "at = edit time (s), dur = edit duration (s), src = source in-point (s), rate = playback rate (source consumed = dur * rate), fx = horizontal crop focus (0..1 of source width)",
+  "cuts": [
+    {
+      "id": "c1",
+      "at": 0.0,
+      "dur": 1.0,
+      "src": 79.55,
+      "rate": 0.5,
+      "fx": 0.5,
+      "lines": [
+        [
+          "w",
+          "THIS CHAIR"
+        ],
+        [
+          "y",
+          "IS THE GHOST"
+        ]
+      ],
+      "note": "hook: slow-mo into the chair slamming the lens"
+    },
+    {
+      "id": "c2",
+      "at": 1.0,
+      "dur": 1.0,
+      "src": 80.05,
+      "rate": 1,
+      "fx": 0.5,
+      "lines": [],
+      "note": "impact (caption from c1 holds)"
+    },
+    {
+      "id": "c3",
+      "at": 2.0,
+      "dur": 1.0,
+      "src": 0.5,
+      "rate": 1,
+      "fx": 0.52,
+      "lines": [
+        [
+          "w",
+          "FIND THE"
+        ],
+        [
+          "c",
+          "GHOST"
+        ]
+      ],
+      "note": "round starts: HUNTERS RELEASED"
+    },
+    {
+      "id": "c4",
+      "at": 3.0,
+      "dur": 1.5,
+      "src": 25.8,
+      "rate": 1,
+      "fx": 0.45,
+      "lines": [
+        [
+          "w",
+          "JUST A"
+        ],
+        [
+          "w",
+          "CHAIR..."
+        ]
+      ],
+      "note": "the innocent armchair"
+    },
+    {
+      "id": "c5",
+      "at": 4.5,
+      "dur": 1.5,
+      "src": 51.3,
+      "rate": 1,
+      "fx": 0.62,
+      "lines": [
+        [
+          "r",
+          "...RIGHT?"
+        ]
+      ],
+      "note": "the chair floats"
+    },
+    {
+      "id": "c6",
+      "at": 6.0,
+      "dur": 1.5,
+      "src": 58.4,
+      "rate": 1,
+      "fx": 0.45,
+      "lines": [
+        [
+          "w",
+          "IT CAME"
+        ],
+        [
+          "r",
+          "FOR ME"
+        ]
+      ],
+      "note": "the chair swoops over the camera (~6.6)"
+    },
+    {
+      "id": "c7",
+      "at": 7.5,
+      "dur": 1.5,
+      "src": 76.9,
+      "rate": 1,
+      "fx": 0.5,
+      "lines": [
+        [
+          "w",
+          "CORNERED"
+        ],
+        [
+          "y",
+          "IT"
+        ]
+      ],
+      "note": "the chair at the top of the stairs"
+    },
+    {
+      "id": "c8",
+      "at": 9.0,
+      "dur": 1.5,
+      "src": 78.4,
+      "rate": 1,
+      "fx": 0.5,
+      "lines": [
+        [
+          "c",
+          "DRAIN IT!!"
+        ]
+      ],
+      "note": "vacuum draining"
+    },
+    {
+      "id": "c9",
+      "at": 10.5,
+      "dur": 1.5,
+      "src": 79.95,
+      "rate": 1,
+      "fx": 0.5,
+      "lines": [
+        [
+          "w",
+          "GHOST"
+        ],
+        [
+          "y",
+          "EJECTED"
+        ]
+      ],
+      "note": "the slam + SUCKED OUT OF THE READING CHAIR"
+    },
+    {
+      "id": "c10",
+      "at": 12.0,
+      "dur": 1.5,
+      "src": 104.0,
+      "rate": 1,
+      "fx": 0.42,
+      "lines": [
+        [
+          "w",
+          "NOW IT'S IN"
+        ],
+        [
+          "r",
+          "THE MIRROR"
+        ]
+      ],
+      "note": "DROP: the mirror with a purple aura"
+    },
+    {
+      "id": "c11",
+      "at": 13.5,
+      "dur": 1.5,
+      "src": 109.5,
+      "rate": 1,
+      "fx": 0.45,
+      "lines": [
+        [
+          "c",
+          "SUCK IT"
+        ],
+        [
+          "c",
+          "OUT!!"
+        ]
+      ],
+      "note": "draining the mirror"
+    },
+    {
+      "id": "c12",
+      "at": 15.0,
+      "dur": 1.5,
+      "src": 111.0,
+      "rate": 0.5,
+      "fx": 0.45,
+      "lines": [
+        [
+          "w",
+          "THERE"
+        ],
+        [
+          "y",
+          "HE IS"
+        ]
+      ],
+      "note": "slow-mo: the ghost bursts out of the mirror"
+    },
+    {
+      "id": "c13",
+      "at": 16.5,
+      "dur": 1.5,
+      "src": 111.75,
+      "rate": 0.8,
+      "fx": 0.4,
+      "lines": [
+        [
+          "r",
+          "HE RAN."
+        ]
+      ],
+      "note": "the ghost runs through the camera (~17.75)"
+    },
+    {
+      "id": "c14",
+      "at": 18.0,
+      "dur": 1.5,
+      "src": 115.5,
+      "rate": 1,
+      "fx": 0.515,
+      "lines": [
+        [
+          "w",
+          "FROM 100%"
+        ],
+        [
+          "y",
+          "TO 36%"
+        ]
+      ],
+      "note": "zoom into the ghost-health HUD while it drains to 36% (true at 1:57)"
+    },
+    {
+      "id": "c15",
+      "at": 19.5,
+      "dur": 2.5,
+      "src": 58.4,
+      "rate": 1,
+      "fx": 0.45,
+      "lines": [
+        [
+          "w",
+          "FOLLOW FOR"
+        ],
+        [
+          "y",
+          "PART 2"
+        ]
+      ],
+      "note": "the swoop again; loops into c1"
+    }
+  ]
+}

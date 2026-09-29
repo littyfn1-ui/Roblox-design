@@ -8,7 +8,9 @@ import puppeteer from "puppeteer-core";
 const here = dirname(fileURLToPath(import.meta.url));
 const out = process.argv[2];
 const gainDb = Number(process.argv[3] ?? 0);
-const code = readFileSync(join(here, "soundtrack.js"), "utf8").replace(/^export /m, "");
+// Optional third argument: which arrangement file to render (default soundtrack.js).
+const src = process.argv[4] ?? "soundtrack.js";
+const code = readFileSync(join(here, src), "utf8").replace(/^export /m, "");
 
 const browser = await puppeteer.launch({
   executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",

@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>THE CHAIR IS THE GHOST</title>
+    <!-- Generated from edl.json + index.tpl by build.py. Edit those, not this file. -->
+    <script src="./assets/gsap.min.js"></script>
+    <script src="./assets/camera-shake.js"></script>
+    <script src="./assets/lib.js"></script>
+    <style>
+      :root {
+        --y: #ffd700;
+        --r: #ff1e27;
+        --c: #00ffff;
+        --paper: #fffdf2;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #0f0f12;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0f0f12;
+        font-family: "Archivo Black", sans-serif;
+      }
+      #frame,
+      #shake,
+      #rig {
+        position: absolute;
+        inset: 0;
+      }
+      #frame {
+        overflow: hidden;
+      }
+      #rig {
+        transform-style: preserve-3d;
+      }
+      /* One untimed wrapper per cut: the wrapper frames it, the inner .zoom is the
+         shift-lock camera, the timed <video> inside is the source range. */
+      .vw,
+      .zoom {
+        position: absolute;
+        inset: 0;
+      }
+      .vw video {
+        position: absolute;
+        top: 0;
+        width: 3413.3px;
+        height: 1920px;
+      }
+      /* Darken the top of frame so captions read over busy footage. */
+      #scrim {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1100px;
+        background: linear-gradient(180deg, rgba(10, 10, 14, 0.55) 0%, rgba(10, 10, 14, 0.35) 45%, rgba(10, 10, 14, 0) 100%);
+      }
+      .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .ln {
+        display: block;
+        white-space: nowrap;
+        text-transform: uppercase;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        color: var(--paper);
+        -webkit-text-stroke: 18px #000;
+        paint-order: stroke fill;
+        text-shadow: 0 14px 0 #000;
+      }
+      .y {
+        color: var(--y);
+      }
+      .r {
+        color: var(--r);
+      }
+      .c {
+        color: var(--c);
+      }
+      .w {
+        color: var(--paper);
+      }
+      #flash {
+        position: absolute;
+        inset: 0;
+        background: var(--paper);
+        opacity: 0;
+      }
+      #pulse {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 30, 39, 0) 40%, rgba(255, 30, 39, 0.5) 100%);
+        opacity: 0;
+      }
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, 0.45) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="22" data-width="1080" data-height="1920">
+      <div id="frame">
+        <div id="shake">
+          <div id="rig">
+            <div class="vw" id="w-c1" data-layout-allow-overflow="true"><div class="zoom" id="z-c1"><video id="v-c1" src="assets/gameplay.mp4" data-start="0" data-duration="1" data-media-start="79.55" data-playback-rate="0.5" data-track-index="1" muted playsinline style="left: -1166.7px"></video></div></div>
+            <div class="vw" id="w-c2" data-layout-allow-overflow="true"><div class="zoom" id="z-c2"><video id="v-c2" src="assets/gameplay.mp4" data-start="1" data-duration="1" data-media-start="80.05" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -1166.7px"></video></div></div>
+            <div class="vw" id="w-c3" data-layout-allow-overflow="true"><div class="zoom" id="z-c3"><video id="v-c3" src="assets/gameplay.mp4" data-start="2" data-duration="1" data-media-start="0.5" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1234.9px"></video></div></div>
+            <div class="vw" id="w-c4" data-layout-allow-overflow="true"><div class="zoom" id="z-c4"><video id="v-c4" src="assets/gameplay.mp4" data-start="3" data-duration="1.5" data-media-start="25.8" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -996.0px"></video></div></div>
+            <div class="vw" id="w-c5" data-layout-allow-overflow="true"><div class="zoom" id="z-c5"><video id="v-c5" src="assets/gameplay.mp4" data-start="4.5" data-duration="1.5" data-media-start="51.3" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1576.3px"></video></div></div>
+            <div class="vw" id="w-c6" data-layout-allow-overflow="true"><div class="zoom" id="z-c6"><video id="v-c6" src="assets/gameplay.mp4" data-start="6" data-duration="1.5" data-media-start="58.4" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -996.0px"></video></div></div>
+            <div class="vw" id="w-c7" data-layout-allow-overflow="true"><div class="zoom" id="z-c7"><video id="v-c7" src="assets/gameplay.mp4" data-start="7.5" data-duration="1.5" data-media-start="76.9" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1166.7px"></video></div></div>
+            <div class="vw" id="w-c8" data-layout-allow-overflow="true"><div class="zoom" id="z-c8"><video id="v-c8" src="assets/gameplay.mp4" data-start="9" data-duration="1.5" data-media-start="78.4" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -1166.7px"></video></div></div>
+            <div class="vw" id="w-c9" data-layout-allow-overflow="true"><div class="zoom" id="z-c9"><video id="v-c9" src="assets/gameplay.mp4" data-start="10.5" data-duration="1.5" data-media-start="79.95" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1166.7px"></video></div></div>
+            <div class="vw" id="w-c10" data-layout-allow-overflow="true"><div class="zoom" id="z-c10"><video id="v-c10" src="assets/gameplay.mp4" data-start="12" data-duration="1.5" data-media-start="104" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -893.6px"></video></div></div>
+            <div class="vw" id="w-c11" data-layout-allow-overflow="true"><div class="zoom" id="z-c11"><video id="v-c11" src="assets/gameplay.mp4" data-start="13.5" data-duration="1.5" data-media-start="109.5" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -996.0px"></video></div></div>
+            <div class="vw" id="w-c12" data-layout-allow-overflow="true"><div class="zoom" id="z-c12"><video id="v-c12" src="assets/gameplay.mp4" data-start="15" data-duration="1.5" data-media-start="111" data-playback-rate="0.5" data-track-index="2" muted playsinline style="left: -996.0px"></video></div></div>
+            <div class="vw" id="w-c13" data-layout-allow-overflow="true"><div class="zoom" id="z-c13"><video id="v-c13" src="assets/gameplay.mp4" data-start="16.5" data-duration="1.5" data-media-start="111.75" data-playback-rate="0.8" data-track-index="1" muted playsinline style="left: -825.3px"></video></div></div>
+            <div class="vw" id="w-c14" data-layout-allow-overflow="true"><div class="zoom" id="z-c14"><video id="v-c14" src="assets/gameplay.mp4" data-start="18" data-duration="1.5" data-media-start="115.5" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -1217.9px"></video></div></div>
+            <div class="vw" id="w-c15" data-layout-allow-overflow="true"><div class="zoom" id="z-c15"><video id="v-c15" src="assets/gameplay.mp4" data-start="19.5" data-duration="2.5" data-media-start="58.4" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -996.0px"></video></div></div>
+          </div>
+          <div id="scrim"></div>
+            <div class="cap clip" id="cap-c1" data-start="0" data-duration="2" data-track-index="3">
+              <span class="ln w" id="t-c1-0" style="font-size: 135px">THIS CHAIR</span><span class="ln y" id="t-c1-1" style="font-size: 112px">IS THE GHOST</span>
+            </div>
+            <div class="cap clip" id="cap-c3" data-start="2" data-duration="1" data-track-index="5">
+              <span class="ln w" id="t-c3-0" style="font-size: 168px">FIND THE</span><span class="ln c" id="t-c3-1" style="font-size: 170px">GHOST</span>
+            </div>
+            <div class="cap clip" id="cap-c4" data-start="3" data-duration="1.5" data-track-index="6">
+              <span class="ln w" id="t-c4-0" style="font-size: 170px">JUST A</span><span class="ln w" id="t-c4-1" style="font-size: 168px">CHAIR...</span>
+            </div>
+            <div class="cap clip" id="cap-c5" data-start="4.5" data-duration="1.5" data-track-index="7">
+              <span class="ln r" id="t-c5-0" style="font-size: 150px">...RIGHT?</span>
+            </div>
+            <div class="cap clip" id="cap-c6" data-start="6" data-duration="1.5" data-track-index="3">
+              <span class="ln w" id="t-c6-0" style="font-size: 170px">IT CAME</span><span class="ln r" id="t-c6-1" style="font-size: 170px">FOR ME</span>
+            </div>
+            <div class="cap clip" id="cap-c7" data-start="7.5" data-duration="1.5" data-track-index="4">
+              <span class="ln w" id="t-c7-0" style="font-size: 168px">CORNERED</span><span class="ln y" id="t-c7-1" style="font-size: 170px">IT</span>
+            </div>
+            <div class="cap clip" id="cap-c8" data-start="9" data-duration="1.5" data-track-index="5">
+              <span class="ln c" id="t-c8-0" style="font-size: 135px">DRAIN IT!!</span>
+            </div>
+            <div class="cap clip" id="cap-c9" data-start="10.5" data-duration="1.5" data-track-index="6">
+              <span class="ln w" id="t-c9-0" style="font-size: 170px">GHOST</span><span class="ln y" id="t-c9-1" style="font-size: 170px">EJECTED</span>
+            </div>
+            <div class="cap clip" id="cap-c10" data-start="12" data-duration="1.5" data-track-index="7">
+              <span class="ln w" id="t-c10-0" style="font-size: 122px">NOW IT'S IN</span><span class="ln r" id="t-c10-1" style="font-size: 135px">THE MIRROR</span>
+            </div>
+            <div class="cap clip" id="cap-c11" data-start="13.5" data-duration="1.5" data-track-index="3">
+              <span class="ln c" id="t-c11-0" style="font-size: 170px">SUCK IT</span><span class="ln c" id="t-c11-1" style="font-size: 170px">OUT!!</span>
+            </div>
+            <div class="cap clip" id="cap-c12" data-start="15" data-duration="1.5" data-track-index="4">
+              <span class="ln w" id="t-c12-0" style="font-size: 170px">THERE</span><span class="ln y" id="t-c12-1" style="font-size: 170px">HE IS</span>
+            </div>
+            <div class="cap clip" id="cap-c13" data-start="16.5" data-duration="1.5" data-track-index="5">
+              <span class="ln r" id="t-c13-0" style="font-size: 170px">HE RAN.</span>
+            </div>
+            <div class="cap clip" id="cap-c14" data-start="18" data-duration="1.5" data-track-index="6">
+              <span class="ln w" id="t-c14-0" style="font-size: 150px">FROM 100%</span><span class="ln y" id="t-c14-1" style="font-size: 170px">TO 36%</span>
+            </div>
+            <div class="cap clip" id="cap-c15" data-start="19.5" data-duration="2.5" data-track-index="7">
+              <span class="ln w" id="t-c15-0" style="font-size: 135px">FOLLOW FOR</span><span class="ln y" id="t-c15-1" style="font-size: 170px">PART 2</span>
+            </div>
+        </div>
+      </div>
+      <div id="pulse"></div>
+      <div id="vignette"></div>
+      <div id="flash"></div>
+
+      <audio id="mix" src="./assets/mix.wav" data-start="0" data-duration="22" data-track-index="20" data-volume="1"></audio>
+    </div>
+
+    <script>
+      // One paused timeline, 120 BPM grid (BEAT 0.5s, STEP 0.125s), positions in seconds.
+      (function () {
+        "use strict";
+        var STEP = 0.125;
+        var CUTS = [{"id": "c1", "at": 0.0, "dur": 1.0, "lines": [["w", "THIS CHAIR"], ["y", "IS THE GHOST"]]}, {"id": "c2", "at": 1.0, "dur": 1.0, "lines": []}, {"id": "c3", "at": 2.0, "dur": 1.0, "lines": [["w", "FIND THE"], ["c", "GHOST"]]}, {"id": "c4", "at": 3.0, "dur": 1.5, "lines": [["w", "JUST A"], ["w", "CHAIR..."]]}, {"id": "c5", "at": 4.5, "dur": 1.5, "lines": [["r", "...RIGHT?"]]}, {"id": "c6", "at": 6.0, "dur": 1.5, "lines": [["w", "IT CAME"], ["r", "FOR ME"]]}, {"id": "c7", "at": 7.5, "dur": 1.5, "lines": [["w", "CORNERED"], ["y", "IT"]]}, {"id": "c8", "at": 9.0, "dur": 1.5, "lines": [["c", "DRAIN IT!!"]]}, {"id": "c9", "at": 10.5, "dur": 1.5, "lines": [["w", "GHOST"], ["y", "EJECTED"]]}, {"id": "c10", "at": 12.0, "dur": 1.5, "lines": [["w", "NOW IT'S IN"], ["r", "THE MIRROR"]]}, {"id": "c11", "at": 13.5, "dur": 1.5, "lines": [["c", "SUCK IT"], ["c", "OUT!!"]]}, {"id": "c12", "at": 15.0, "dur": 1.5, "lines": [["w", "THERE"], ["y", "HE IS"]]}, {"id": "c13", "at": 16.5, "dur": 1.5, "lines": [["r", "HE RAN."]]}, {"id": "c14", "at": 18.0, "dur": 1.5, "lines": [["w", "FROM 100%"], ["y", "TO 36%"]]}, {"id": "c15", "at": 19.5, "dur": 2.5, "lines": [["w", "FOLLOW FOR"], ["y", "PART 2"]]}];
+        var tl = gsap.timeline({ paused: true });
+        var K = BH.kit(tl, 0);
+        var say = K.say;
+
+        function shake(t, amp, dur, seed) {
+          var r = BH.rng(seed);
+          var n = Math.max(5, Math.round(dur / 0.034));
+          var d = dur / n;
+          for (var i = 0; i < n; i++) {
+            var k = 1 - i / n;
+            tl.to("#shake", { x: (r() * 2 - 1) * amp * k, y: (r() * 2 - 1) * amp * k, rotation: (r() * 2 - 1) * amp * 0.03 * k, duration: d, ease: "none" }, t + i * d);
+          }
+          tl.to("#shake", { x: 0, y: 0, rotation: 0, duration: 0.03, ease: "none" }, t + dur);
+        }
+        function flash(t, color, peak, dur) {
+          tl.set("#flash", { backgroundColor: color, opacity: peak }, t);
+          tl.to("#flash", { opacity: 0, duration: dur, ease: "power2.out" }, t + 0.001);
+        }
+        function pump(t, amt, pulse) {
+          tl.set("#shake", { scale: 1 + amt }, t);
+          tl.to("#shake", { scale: 1, duration: 0.18, ease: "power2.out" }, t + 0.001);
+          if (pulse) {
+            tl.set("#pulse", { opacity: pulse }, t);
+            tl.to("#pulse", { opacity: 0, duration: 0.3, ease: "power2.out" }, t + 0.001);
+          }
+        }
+        // Shift-lock camera per cut: a snap on the cut, then a push (or a slow-mo creep).
+        function zoom(id, origin, s0, s1, ease, snap) {
+          var c = CUTS.filter(function (x) {
+            return x.id === id;
+          })[0];
+          var sel = "#z-" + id;
+          if (snap) {
+            tl.fromTo(sel, { scale: snap[0], transformOrigin: origin }, { scale: s0, duration: snap[1], ease: "expo.out" }, c.at);
+            tl.to(sel, { scale: s1, duration: c.dur - snap[1], ease: ease || "none" }, c.at + snap[1]);
+          } else {
+            tl.fromTo(sel, { scale: s0, transformOrigin: origin }, { scale: s1, duration: c.dur, ease: ease || "none" }, c.at);
+          }
+        }
+
+        // Continuous handheld drift (registry camera-shake). The .zoom wrappers never
+        // drop below 1.05x, so the drift never shows a frame edge.
+        window.cameraShake(tl, "#rig", { profile: "handheld-normal-mild", intensity: 0.7, duration: 22, at: 0, fps: 30, overscan: 1.04 });
+
+        zoom("c1", "540px 900px", 1.25, 1.45, "power2.in"); // slow-mo creep into the slam
+        zoom("c2", "540px 900px", 1.12, 1.18, "none", [1.6, 0.25]); // impact punch-out
+        zoom("c3", "540px 250px", 1.1, 1.2); // HUNTERS RELEASED banner
+        zoom("c4", "540px 900px", 1.05, 1.32, "power1.in"); // suspicious push on the chair
+        zoom("c5", "540px 800px", 1.12, 1.22, "none", [1.35, 0.2]);
+        zoom("c6", "540px 700px", 1.1, 1.38, "power2.in"); // swoop
+        zoom("c7", "540px 800px", 1.15, 1.28);
+        zoom("c8", "540px 900px", 1.1, 1.42, "power2.in"); // drain build
+        zoom("c9", "540px 900px", 1.12, 1.2, "none", [1.6, 0.25]); // the slam again
+        zoom("c10", "540px 800px", 1.15, 1.25, "none", [1.55, 0.25]); // DROP
+        zoom("c11", "540px 900px", 1.1, 1.38, "power2.in");
+        zoom("c12", "540px 850px", 1.3, 1.55, "power1.out"); // slow-mo reveal
+        zoom("c13", "540px 850px", 1.2, 1.06, "power1.out");
+        zoom("c14", "540px 107px", 2.0, 2.1, "none", [1.05, 0.35]); // punch into the ghost-health HUD
+        zoom("c15", "540px 700px", 1.1, 1.25, "power2.in"); // ends at c1's opening scale
+
+        // Captions: distinct entrances, held for the whole cut.
+        var ENTRY = { c1: ["slam", "pop"], c3: ["left", "right"], c4: ["rise", "rise"], c5: ["stamp"], c6: ["drop", "stamp"], c7: ["left", "slam"], c8: ["stamp"], c9: ["drop", "stamp"], c10: ["left", "right"], c11: ["slam", "slam"], c12: ["pop", "stamp"], c13: ["stamp"], c14: ["drop", "pop"], c15: ["rise", "pop"] };
+        CUTS.forEach(function (c) {
+          var end = c.at + c.dur + (c.id === "c1" ? 1 : 0);
+          c.lines.forEach(function (line, j) {
+            say("#t-" + c.id + "-" + j, ENTRY[c.id][j], c.at + j * STEP, end, 1.06);
+          });
+        });
+
+        // Impacts, on the same beats as the booms and crashes in mix.wav.
+        flash(0, "#fffdf2", 0.25, 0.15);
+        flash(1.0, "#fffdf2", 0.7, 0.3);
+        shake(1.0, 60, 0.45, 101); // the chair slams the lens
+        shake(6.6, 30, 0.3, 66); // the swoop
+        flash(10.5, "#00ffff", 0.55, 0.3);
+        shake(10.5, 64, 0.45, 105); // GHOST EJECTED
+        flash(12.0, "#ff1e27", 0.6, 0.3);
+        shake(12.0, 56, 0.4, 120); // DROP
+        flash(15.0, "#fffdf2", 0.6, 0.35);
+        shake(15.0, 36, 0.35, 150); // the reveal
+        shake(17.75, 40, 0.3, 177); // he runs through the camera
+
+        // Beat pumps: light in the build, heavy in the drop (kicks on 16th steps 0,3,7,10).
+        var bar;
+        for (bar = 1; bar < 5; bar++) {
+          [0, 7, 10].forEach(function (st) {
+            pump(bar * 2 + st * STEP, 0.012, 0);
+          });
+        }
+        for (bar = 6; bar < 9; bar++) {
+          [0, 3, 7, 10].forEach(function (st) {
+            pump(bar * 2 + st * STEP, st === 0 ? 0.035 : 0.022, st === 0 ? 0.7 : 0.4);
+          });
+        }
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
