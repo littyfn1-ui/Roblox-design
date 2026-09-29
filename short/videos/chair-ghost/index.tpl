@@ -56,24 +56,16 @@
       }
       .vw video {
         position: absolute;
-        top: 0;
-        width: 3413.3px;
-        height: 1920px;
-      }
-      /* Darken the top of frame so captions read over busy footage. */
-      #scrim {
-        position: absolute;
         left: 0;
-        right: 0;
         top: 0;
-        height: 1100px;
-        background: linear-gradient(180deg, rgba(10, 10, 14, 0.55) 0%, rgba(10, 10, 14, 0.35) 45%, rgba(10, 10, 14, 0) 100%);
+        width: 1080px;
+        height: 1920px;
       }
       .cap {
         position: absolute;
         left: 0;
         right: 0;
-        top: 300px;
+        top: 105px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -128,7 +120,6 @@
           <div id="rig">
 <!--VIDEOS-->
           </div>
-          <div id="scrim"></div>
 <!--CAPTIONS-->
         </div>
       </div>
@@ -171,39 +162,22 @@
             tl.to("#pulse", { opacity: 0, duration: 0.3, ease: "power2.out" }, t + 0.001);
           }
         }
-        // Shift-lock camera per cut: a snap on the cut, then a push (or a slow-mo creep).
-        function zoom(id, origin, s0, s1, ease, snap) {
-          var c = CUTS.filter(function (x) {
-            return x.id === id;
-          })[0];
-          var sel = "#z-" + id;
-          if (snap) {
-            tl.fromTo(sel, { scale: snap[0], transformOrigin: origin }, { scale: s0, duration: snap[1], ease: "expo.out" }, c.at);
-            tl.to(sel, { scale: s1, duration: c.dur - snap[1], ease: ease || "none" }, c.at + snap[1]);
-          } else {
-            tl.fromTo(sel, { scale: s0, transformOrigin: origin }, { scale: s1, duration: c.dur, ease: ease || "none" }, c.at);
-          }
-        }
+        // Shift-lock camera on the whole frame: each cut snaps to a scale, then pushes.
+        // Kept to 1.00-1.14x so the pre-sharpened footage stays crisp.
+        var CAM = {
+          c1: [1.0, 1.12, "power2.in"], c2: [1.12, 1.02, "expo.out"], c3: [1.0, 1.06], c4: [1.0, 1.1, "power1.in"],
+          c5: [1.1, 1.03, "expo.out"], c6: [1.0, 1.12, "power2.in"], c7: [1.02, 1.08], c8: [1.0, 1.12, "power2.in"],
+          c9: [1.14, 1.03, "expo.out"], c10: [1.12, 1.04, "expo.out"], c11: [1.0, 1.12, "power2.in"], c12: [1.04, 1.14, "power1.out"],
+          c13: [1.1, 1.0, "power1.out"], c14: [1.0, 1.08], c15: [1.0, 1.0, "none"]
+        };
+        CUTS.forEach(function (c) {
+          var m = CAM[c.id];
+          tl.set("#z-base", { scale: m[0], transformOrigin: "540px 700px" }, c.at); // band top never rises above ~400px
+          tl.to("#z-base", { scale: m[1], duration: c.dur, ease: m[2] || "none" }, c.at + 0.001);
+        });
 
-        // Continuous handheld drift (registry camera-shake). The .zoom wrappers never
-        // drop below 1.05x, so the drift never shows a frame edge.
-        window.cameraShake(tl, "#rig", { profile: "handheld-normal-mild", intensity: 0.7, duration: 22, at: 0, fps: 30, overscan: 1.04 });
-
-        zoom("c1", "540px 900px", 1.25, 1.45, "power2.in"); // slow-mo creep into the slam
-        zoom("c2", "540px 900px", 1.12, 1.18, "none", [1.6, 0.25]); // impact punch-out
-        zoom("c3", "540px 250px", 1.1, 1.2); // HUNTERS RELEASED banner
-        zoom("c4", "540px 900px", 1.05, 1.32, "power1.in"); // suspicious push on the chair
-        zoom("c5", "540px 800px", 1.12, 1.22, "none", [1.35, 0.2]);
-        zoom("c6", "540px 700px", 1.1, 1.38, "power2.in"); // swoop
-        zoom("c7", "540px 800px", 1.15, 1.28);
-        zoom("c8", "540px 900px", 1.1, 1.42, "power2.in"); // drain build
-        zoom("c9", "540px 900px", 1.12, 1.2, "none", [1.6, 0.25]); // the slam again
-        zoom("c10", "540px 800px", 1.15, 1.25, "none", [1.55, 0.25]); // DROP
-        zoom("c11", "540px 900px", 1.1, 1.38, "power2.in");
-        zoom("c12", "540px 850px", 1.3, 1.55, "power1.out"); // slow-mo reveal
-        zoom("c13", "540px 850px", 1.2, 1.06, "power1.out");
-        zoom("c14", "540px 107px", 2.0, 2.1, "none", [1.05, 0.35]); // punch into the ghost-health HUD
-        zoom("c15", "540px 700px", 1.1, 1.25, "power2.in"); // ends at c1's opening scale
+        // Continuous handheld drift (registry camera-shake) with a little overscan.
+        window.cameraShake(tl, "#rig", { profile: "handheld-normal-mild", intensity: 0.6, duration: 22, at: 0, fps: 30, overscan: 1.04 });
 
         // Captions: distinct entrances, held for the whole cut.
         var ENTRY = { c1: ["slam", "pop"], c3: ["left", "right"], c4: ["rise", "rise"], c5: ["stamp"], c6: ["drop", "stamp"], c7: ["left", "slam"], c8: ["stamp"], c9: ["drop", "stamp"], c10: ["left", "right"], c11: ["slam", "slam"], c12: ["pop", "stamp"], c13: ["stamp"], c14: ["drop", "pop"], c15: ["rise", "pop"] };

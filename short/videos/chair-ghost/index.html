@@ -56,24 +56,16 @@
       }
       .vw video {
         position: absolute;
-        top: 0;
-        width: 3413.3px;
-        height: 1920px;
-      }
-      /* Darken the top of frame so captions read over busy footage. */
-      #scrim {
-        position: absolute;
         left: 0;
-        right: 0;
         top: 0;
-        height: 1100px;
-        background: linear-gradient(180deg, rgba(10, 10, 14, 0.55) 0%, rgba(10, 10, 14, 0.35) 45%, rgba(10, 10, 14, 0) 100%);
+        width: 1080px;
+        height: 1920px;
       }
       .cap {
         position: absolute;
         left: 0;
         right: 0;
-        top: 300px;
+        top: 105px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -126,64 +118,49 @@
       <div id="frame">
         <div id="shake">
           <div id="rig">
-            <div class="vw" id="w-c1" data-layout-allow-overflow="true"><div class="zoom" id="z-c1"><video id="v-c1" src="assets/gameplay.mp4" data-start="0" data-duration="1" data-media-start="79.55" data-playback-rate="0.5" data-track-index="1" muted playsinline style="left: -1166.7px"></video></div></div>
-            <div class="vw" id="w-c2" data-layout-allow-overflow="true"><div class="zoom" id="z-c2"><video id="v-c2" src="assets/gameplay.mp4" data-start="1" data-duration="1" data-media-start="80.05" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -1166.7px"></video></div></div>
-            <div class="vw" id="w-c3" data-layout-allow-overflow="true"><div class="zoom" id="z-c3"><video id="v-c3" src="assets/gameplay.mp4" data-start="2" data-duration="1" data-media-start="0.5" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1234.9px"></video></div></div>
-            <div class="vw" id="w-c4" data-layout-allow-overflow="true"><div class="zoom" id="z-c4"><video id="v-c4" src="assets/gameplay.mp4" data-start="3" data-duration="1.5" data-media-start="25.8" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -996.0px"></video></div></div>
-            <div class="vw" id="w-c5" data-layout-allow-overflow="true"><div class="zoom" id="z-c5"><video id="v-c5" src="assets/gameplay.mp4" data-start="4.5" data-duration="1.5" data-media-start="51.3" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1576.3px"></video></div></div>
-            <div class="vw" id="w-c6" data-layout-allow-overflow="true"><div class="zoom" id="z-c6"><video id="v-c6" src="assets/gameplay.mp4" data-start="6" data-duration="1.5" data-media-start="58.4" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -996.0px"></video></div></div>
-            <div class="vw" id="w-c7" data-layout-allow-overflow="true"><div class="zoom" id="z-c7"><video id="v-c7" src="assets/gameplay.mp4" data-start="7.5" data-duration="1.5" data-media-start="76.9" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1166.7px"></video></div></div>
-            <div class="vw" id="w-c8" data-layout-allow-overflow="true"><div class="zoom" id="z-c8"><video id="v-c8" src="assets/gameplay.mp4" data-start="9" data-duration="1.5" data-media-start="78.4" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -1166.7px"></video></div></div>
-            <div class="vw" id="w-c9" data-layout-allow-overflow="true"><div class="zoom" id="z-c9"><video id="v-c9" src="assets/gameplay.mp4" data-start="10.5" data-duration="1.5" data-media-start="79.95" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -1166.7px"></video></div></div>
-            <div class="vw" id="w-c10" data-layout-allow-overflow="true"><div class="zoom" id="z-c10"><video id="v-c10" src="assets/gameplay.mp4" data-start="12" data-duration="1.5" data-media-start="104" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -893.6px"></video></div></div>
-            <div class="vw" id="w-c11" data-layout-allow-overflow="true"><div class="zoom" id="z-c11"><video id="v-c11" src="assets/gameplay.mp4" data-start="13.5" data-duration="1.5" data-media-start="109.5" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -996.0px"></video></div></div>
-            <div class="vw" id="w-c12" data-layout-allow-overflow="true"><div class="zoom" id="z-c12"><video id="v-c12" src="assets/gameplay.mp4" data-start="15" data-duration="1.5" data-media-start="111" data-playback-rate="0.5" data-track-index="2" muted playsinline style="left: -996.0px"></video></div></div>
-            <div class="vw" id="w-c13" data-layout-allow-overflow="true"><div class="zoom" id="z-c13"><video id="v-c13" src="assets/gameplay.mp4" data-start="16.5" data-duration="1.5" data-media-start="111.75" data-playback-rate="0.8" data-track-index="1" muted playsinline style="left: -825.3px"></video></div></div>
-            <div class="vw" id="w-c14" data-layout-allow-overflow="true"><div class="zoom" id="z-c14"><video id="v-c14" src="assets/gameplay.mp4" data-start="18" data-duration="1.5" data-media-start="115.5" data-playback-rate="1" data-track-index="2" muted playsinline style="left: -1217.9px"></video></div></div>
-            <div class="vw" id="w-c15" data-layout-allow-overflow="true"><div class="zoom" id="z-c15"><video id="v-c15" src="assets/gameplay.mp4" data-start="19.5" data-duration="2.5" data-media-start="58.4" data-playback-rate="1" data-track-index="1" muted playsinline style="left: -996.0px"></video></div></div>
+            <div class="vw" id="w-base" data-layout-allow-overflow="true"><div class="zoom" id="z-base"><video id="v-base" src="assets/base.mp4" data-start="0" data-duration="22" data-track-index="1" muted playsinline></video></div></div>
           </div>
-          <div id="scrim"></div>
             <div class="cap clip" id="cap-c1" data-start="0" data-duration="2" data-track-index="3">
-              <span class="ln w" id="t-c1-0" style="font-size: 135px">THIS CHAIR</span><span class="ln y" id="t-c1-1" style="font-size: 112px">IS THE GHOST</span>
+              <span class="ln w" id="t-c1-0" style="font-size: 124px">THIS CHAIR</span><span class="ln y" id="t-c1-1" style="font-size: 112px">IS THE GHOST</span>
             </div>
             <div class="cap clip" id="cap-c3" data-start="2" data-duration="1" data-track-index="5">
-              <span class="ln w" id="t-c3-0" style="font-size: 168px">FIND THE</span><span class="ln c" id="t-c3-1" style="font-size: 170px">GHOST</span>
+              <span class="ln w" id="t-c3-0" style="font-size: 124px">FIND THE</span><span class="ln c" id="t-c3-1" style="font-size: 124px">GHOST</span>
             </div>
             <div class="cap clip" id="cap-c4" data-start="3" data-duration="1.5" data-track-index="6">
-              <span class="ln w" id="t-c4-0" style="font-size: 170px">JUST A</span><span class="ln w" id="t-c4-1" style="font-size: 168px">CHAIR...</span>
+              <span class="ln w" id="t-c4-0" style="font-size: 124px">JUST A</span><span class="ln w" id="t-c4-1" style="font-size: 124px">CHAIR...</span>
             </div>
             <div class="cap clip" id="cap-c5" data-start="4.5" data-duration="1.5" data-track-index="7">
-              <span class="ln r" id="t-c5-0" style="font-size: 150px">...RIGHT?</span>
+              <span class="ln r" id="t-c5-0" style="font-size: 124px">...RIGHT?</span>
             </div>
             <div class="cap clip" id="cap-c6" data-start="6" data-duration="1.5" data-track-index="3">
-              <span class="ln w" id="t-c6-0" style="font-size: 170px">IT CAME</span><span class="ln r" id="t-c6-1" style="font-size: 170px">FOR ME</span>
+              <span class="ln w" id="t-c6-0" style="font-size: 124px">IT CAME</span><span class="ln r" id="t-c6-1" style="font-size: 124px">FOR ME</span>
             </div>
             <div class="cap clip" id="cap-c7" data-start="7.5" data-duration="1.5" data-track-index="4">
-              <span class="ln w" id="t-c7-0" style="font-size: 168px">CORNERED</span><span class="ln y" id="t-c7-1" style="font-size: 170px">IT</span>
+              <span class="ln w" id="t-c7-0" style="font-size: 124px">CORNERED</span><span class="ln y" id="t-c7-1" style="font-size: 124px">IT</span>
             </div>
             <div class="cap clip" id="cap-c8" data-start="9" data-duration="1.5" data-track-index="5">
-              <span class="ln c" id="t-c8-0" style="font-size: 135px">DRAIN IT!!</span>
+              <span class="ln c" id="t-c8-0" style="font-size: 124px">DRAIN IT!!</span>
             </div>
             <div class="cap clip" id="cap-c9" data-start="10.5" data-duration="1.5" data-track-index="6">
-              <span class="ln w" id="t-c9-0" style="font-size: 170px">GHOST</span><span class="ln y" id="t-c9-1" style="font-size: 170px">EJECTED</span>
+              <span class="ln w" id="t-c9-0" style="font-size: 124px">GHOST</span><span class="ln y" id="t-c9-1" style="font-size: 124px">EJECTED</span>
             </div>
             <div class="cap clip" id="cap-c10" data-start="12" data-duration="1.5" data-track-index="7">
-              <span class="ln w" id="t-c10-0" style="font-size: 122px">NOW IT'S IN</span><span class="ln r" id="t-c10-1" style="font-size: 135px">THE MIRROR</span>
+              <span class="ln w" id="t-c10-0" style="font-size: 122px">NOW IT'S IN</span><span class="ln r" id="t-c10-1" style="font-size: 124px">THE MIRROR</span>
             </div>
             <div class="cap clip" id="cap-c11" data-start="13.5" data-duration="1.5" data-track-index="3">
-              <span class="ln c" id="t-c11-0" style="font-size: 170px">SUCK IT</span><span class="ln c" id="t-c11-1" style="font-size: 170px">OUT!!</span>
+              <span class="ln c" id="t-c11-0" style="font-size: 124px">SUCK IT</span><span class="ln c" id="t-c11-1" style="font-size: 124px">OUT!!</span>
             </div>
             <div class="cap clip" id="cap-c12" data-start="15" data-duration="1.5" data-track-index="4">
-              <span class="ln w" id="t-c12-0" style="font-size: 170px">THERE</span><span class="ln y" id="t-c12-1" style="font-size: 170px">HE IS</span>
+              <span class="ln w" id="t-c12-0" style="font-size: 124px">THERE</span><span class="ln y" id="t-c12-1" style="font-size: 124px">HE IS</span>
             </div>
             <div class="cap clip" id="cap-c13" data-start="16.5" data-duration="1.5" data-track-index="5">
-              <span class="ln r" id="t-c13-0" style="font-size: 170px">HE RAN.</span>
+              <span class="ln r" id="t-c13-0" style="font-size: 124px">HE RAN.</span>
             </div>
             <div class="cap clip" id="cap-c14" data-start="18" data-duration="1.5" data-track-index="6">
-              <span class="ln w" id="t-c14-0" style="font-size: 150px">FROM 100%</span><span class="ln y" id="t-c14-1" style="font-size: 170px">TO 36%</span>
+              <span class="ln w" id="t-c14-0" style="font-size: 124px">FROM 100%</span><span class="ln y" id="t-c14-1" style="font-size: 124px">TO 36%</span>
             </div>
             <div class="cap clip" id="cap-c15" data-start="19.5" data-duration="2.5" data-track-index="7">
-              <span class="ln w" id="t-c15-0" style="font-size: 135px">FOLLOW FOR</span><span class="ln y" id="t-c15-1" style="font-size: 170px">PART 2</span>
+              <span class="ln w" id="t-c15-0" style="font-size: 124px">FOLLOW FOR</span><span class="ln y" id="t-c15-1" style="font-size: 124px">PART 2</span>
             </div>
         </div>
       </div>
@@ -226,39 +203,22 @@
             tl.to("#pulse", { opacity: 0, duration: 0.3, ease: "power2.out" }, t + 0.001);
           }
         }
-        // Shift-lock camera per cut: a snap on the cut, then a push (or a slow-mo creep).
-        function zoom(id, origin, s0, s1, ease, snap) {
-          var c = CUTS.filter(function (x) {
-            return x.id === id;
-          })[0];
-          var sel = "#z-" + id;
-          if (snap) {
-            tl.fromTo(sel, { scale: snap[0], transformOrigin: origin }, { scale: s0, duration: snap[1], ease: "expo.out" }, c.at);
-            tl.to(sel, { scale: s1, duration: c.dur - snap[1], ease: ease || "none" }, c.at + snap[1]);
-          } else {
-            tl.fromTo(sel, { scale: s0, transformOrigin: origin }, { scale: s1, duration: c.dur, ease: ease || "none" }, c.at);
-          }
-        }
+        // Shift-lock camera on the whole frame: each cut snaps to a scale, then pushes.
+        // Kept to 1.00-1.14x so the pre-sharpened footage stays crisp.
+        var CAM = {
+          c1: [1.0, 1.12, "power2.in"], c2: [1.12, 1.02, "expo.out"], c3: [1.0, 1.06], c4: [1.0, 1.1, "power1.in"],
+          c5: [1.1, 1.03, "expo.out"], c6: [1.0, 1.12, "power2.in"], c7: [1.02, 1.08], c8: [1.0, 1.12, "power2.in"],
+          c9: [1.14, 1.03, "expo.out"], c10: [1.12, 1.04, "expo.out"], c11: [1.0, 1.12, "power2.in"], c12: [1.04, 1.14, "power1.out"],
+          c13: [1.1, 1.0, "power1.out"], c14: [1.0, 1.08], c15: [1.0, 1.0, "none"]
+        };
+        CUTS.forEach(function (c) {
+          var m = CAM[c.id];
+          tl.set("#z-base", { scale: m[0], transformOrigin: "540px 700px" }, c.at); // band top never rises above ~400px
+          tl.to("#z-base", { scale: m[1], duration: c.dur, ease: m[2] || "none" }, c.at + 0.001);
+        });
 
-        // Continuous handheld drift (registry camera-shake). The .zoom wrappers never
-        // drop below 1.05x, so the drift never shows a frame edge.
-        window.cameraShake(tl, "#rig", { profile: "handheld-normal-mild", intensity: 0.7, duration: 22, at: 0, fps: 30, overscan: 1.04 });
-
-        zoom("c1", "540px 900px", 1.25, 1.45, "power2.in"); // slow-mo creep into the slam
-        zoom("c2", "540px 900px", 1.12, 1.18, "none", [1.6, 0.25]); // impact punch-out
-        zoom("c3", "540px 250px", 1.1, 1.2); // HUNTERS RELEASED banner
-        zoom("c4", "540px 900px", 1.05, 1.32, "power1.in"); // suspicious push on the chair
-        zoom("c5", "540px 800px", 1.12, 1.22, "none", [1.35, 0.2]);
-        zoom("c6", "540px 700px", 1.1, 1.38, "power2.in"); // swoop
-        zoom("c7", "540px 800px", 1.15, 1.28);
-        zoom("c8", "540px 900px", 1.1, 1.42, "power2.in"); // drain build
-        zoom("c9", "540px 900px", 1.12, 1.2, "none", [1.6, 0.25]); // the slam again
-        zoom("c10", "540px 800px", 1.15, 1.25, "none", [1.55, 0.25]); // DROP
-        zoom("c11", "540px 900px", 1.1, 1.38, "power2.in");
-        zoom("c12", "540px 850px", 1.3, 1.55, "power1.out"); // slow-mo reveal
-        zoom("c13", "540px 850px", 1.2, 1.06, "power1.out");
-        zoom("c14", "540px 107px", 2.0, 2.1, "none", [1.05, 0.35]); // punch into the ghost-health HUD
-        zoom("c15", "540px 700px", 1.1, 1.25, "power2.in"); // ends at c1's opening scale
+        // Continuous handheld drift (registry camera-shake) with a little overscan.
+        window.cameraShake(tl, "#rig", { profile: "handheld-normal-mild", intensity: 0.6, duration: 22, at: 0, fps: 30, overscan: 1.04 });
 
         // Captions: distinct entrances, held for the whole cut.
         var ENTRY = { c1: ["slam", "pop"], c3: ["left", "right"], c4: ["rise", "rise"], c5: ["stamp"], c6: ["drop", "stamp"], c7: ["left", "slam"], c8: ["stamp"], c9: ["drop", "stamp"], c10: ["left", "right"], c11: ["slam", "slam"], c12: ["pop", "stamp"], c13: ["stamp"], c14: ["drop", "pop"], c15: ["rise", "pop"] };

@@ -1,4 +1,5 @@
-// THE CHAIR IS THE GHOST - soundtrack (same synth engine as THE BAN HAMMER), synthesized from scratch with the Web Audio API.
+// THE CHAIR IS THE GHOST - soundtrack. Spooky trap in F# minor (music box, pads,
+// ghost choir, sliding 808s, trap drums), built on THE BAN HAMMER's synth engine., synthesized from scratch with the Web Audio API.
 // No samples, no audio files: every sound is oscillators, filtered (seeded) noise
 // and envelopes, rendered offline with OfflineAudioContext.
 //
@@ -713,34 +714,294 @@ export async function renderSoundtrack({ gainDb = 0 } = {}) {
   };
   const HALF = { kicks: [0, 10], claps: [8], hatAmp: 0.11, cowAmp: 0.24, bassAmp: 0.4, drive: 2 };
 
-  // Cut list: short/videos/chair-ghost/edl.json. Every hit below sits on a cut or
-  // on the moment in the footage it answers.
+  // -------------------------------------------------------------------------
+  // Spooky-trap instruments (this track only)
+  // -------------------------------------------------------------------------
+  // FM music box: sine carrier with a decaying 3.5x modulator.
+  function musicBox(t, midi, amp = 0.2, dur = 1.1, panV = 0) {
+    const f = midiHz(midi);
+    const car = ctx.createOscillator();
+    car.frequency.value = f;
+    const mod = ctx.createOscillator();
+    mod.frequency.value = f * 3.5;
+    const modG = ctx.createGain();
+    modG.gain.setValueAtTime(f * 2.2, t);
+    modG.gain.exponentialRampToValueAtTime(f * 0.05, t + 0.35);
+    mod.connect(modG);
+    modG.connect(car.frequency);
+    const lp = ctx.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.value = 6000;
+    const g = ctx.createGain();
+    env(g.gain, t, 0.003, amp, dur);
+    car.connect(lp);
+    lp.connect(g);
+    pan(g, panV, music);
+    send(g, 0.45);
+    car.start(t);
+    mod.start(t);
+    car.stop(t + dur + 0.05);
+    mod.stop(t + dur + 0.05);
+  }
 
-  // Bar 1 (0-2s): hook. Slow-mo approach, then the chair slams the lens at 1.0.
+  // Dark pad: detuned saws, low-passed, slow attack.
+  function pad(t0, t1, midis, amp = 0.1) {
+    midis.forEach((m, i) => {
+      for (const det of [-12, 12]) {
+        const o = ctx.createOscillator();
+        o.type = "sawtooth";
+        o.frequency.value = midiHz(m);
+        o.detune.value = det;
+        const lp = ctx.createBiquadFilter();
+        lp.type = "lowpass";
+        lp.frequency.value = 900;
+        lp.Q.value = 0.7;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t0);
+        g.gain.linearRampToValueAtTime(amp / midis.length, t0 + 0.4);
+        g.gain.setValueAtTime(amp / midis.length, Math.max(t0 + 0.41, t1 - 0.3));
+        g.gain.linearRampToValueAtTime(0.0001, t1);
+        o.connect(lp);
+        lp.connect(g);
+        pan(g, (i - 1) * 0.35, music);
+        send(g, 0.3);
+        o.start(t0);
+        o.stop(t1 + 0.05);
+      }
+    });
+  }
+
+  // Ghost choir: saws through "ooh" formants with slow vibrato.
+  function choir(t0, t1, midis, amp = 0.12) {
+    midis.forEach((m, i) => {
+      const o = ctx.createOscillator();
+      o.type = "sawtooth";
+      o.frequency.value = midiHz(m);
+      const vib = ctx.createOscillator();
+      vib.frequency.value = 5 + i * 0.4;
+      const vibG = ctx.createGain();
+      vibG.gain.value = 3;
+      vib.connect(vibG);
+      vibG.connect(o.frequency);
+      const out = ctx.createGain();
+      out.gain.setValueAtTime(0.0001, t0);
+      out.gain.linearRampToValueAtTime(amp / midis.length, t0 + 0.3);
+      out.gain.setValueAtTime(amp / midis.length, Math.max(t0 + 0.31, t1 - 0.25));
+      out.gain.linearRampToValueAtTime(0.0001, t1);
+      for (const [fq, q, fg] of [
+        [420, 6, 1],
+        [800, 8, 0.5],
+        [2600, 10, 0.12],
+      ]) {
+        const bp = ctx.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.frequency.value = fq;
+        bp.Q.value = q;
+        const gg = ctx.createGain();
+        gg.gain.value = fg * 3;
+        o.connect(bp);
+        bp.connect(gg);
+        gg.connect(out);
+      }
+      pan(out, (i - 1) * 0.5, music);
+      send(out, 0.55);
+      o.start(t0);
+      vib.start(t0);
+      o.stop(t1 + 0.05);
+      vib.stop(t1 + 0.05);
+    });
+  }
+
+  // Sliding 808: optional glide from another note, saturated.
+  function slide808(t, midi, dur, amp = 0.7, fromMidi = null, drive = 3) {
+    const f = midiHz(midi);
+    const o = ctx.createOscillator();
+    o.type = "sine";
+    if (fromMidi !== null) {
+      o.frequency.setValueAtTime(midiHz(fromMidi), t);
+      o.frequency.exponentialRampToValueAtTime(f, t + 0.12);
+    } else {
+      o.frequency.setValueAtTime(f * 1.1, t);
+      o.frequency.exponentialRampToValueAtTime(f, t + 0.04);
+    }
+    const sh = ctx.createWaveShaper();
+    sh.curve = tanhCurve(drive);
+    const lp = ctx.createBiquadFilter();
+    lp.type = "lowpass";
+    lp.frequency.value = 1000;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(amp, t + 0.006);
+    g.gain.setValueAtTime(amp, t + Math.max(0.01, dur - 0.06));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(sh);
+    sh.connect(lp);
+    lp.connect(g);
+    g.connect(bassBus);
+    o.start(t);
+    o.stop(t + dur + 0.05);
+  }
+
+  // Trap bar: half-time snare on beat 3, hats on 8ths/16ths with triplet rolls.
+  function trap(bar, o) {
+    const t0 = bar * BAR;
+    const { kicks = [0, 10], hats16 = false, rolls = false, hatAmp = 0.13, pumpOn = false } = o;
+    for (const st of kicks) {
+      kick(t0 + st * STEP, 0.95);
+      if (pumpOn) duck(t0 + st * STEP);
+    }
+    snare(t0 + 8 * STEP, 0.55);
+    clap(t0 + 8 * STEP, 0.45);
+    for (let st = 0; st < 16; st += hats16 ? 1 : 2) {
+      hat(t0 + st * STEP, hatAmp * (st % 4 === 0 ? 1.1 : 0.75), false, st % 2 ? 0.3 : -0.2);
+    }
+    if (rolls) {
+      for (let r = 0; r < 6; r++) hat(t0 + 12 * STEP + (r * BEAT) / 6, hatAmp * (0.6 + r * 0.1), false, 0.35);
+      for (let r = 0; r < 4; r++) hat(t0 + 14 * STEP + (r * STEP) / 2, hatAmp * 0.8, false, -0.35);
+    }
+    hat(t0 + 6 * STEP, hatAmp * 1.3, true, 0.2);
+  }
+
+  // Motifs (F# minor). Music box on 8ths, 808 roots, pad chords.
+  const BOX_A = [78, 81, 85, 81, 77, 81, 85, 81];
+  const BOX_B = [78, 81, 86, 85, 81, 78, 77, 73];
+  const SUB_A = [[0, 42, 6, null], [6, 42, 4, 49], [10, 45, 6, null]];
+  const SUB_B = [[0, 38, 6, null], [6, 37, 4, null], [10, 42, 6, 45]];
+  const CHORD = [[54, 57, 61], [50, 54, 57], [49, 53, 56], [54, 57, 61]];
+  function box(bar, amp = 0.2, octave = false) {
+    const pat = bar % 2 ? BOX_B : BOX_A;
+    pat.forEach((m, i) => {
+      musicBox(bar * BAR + i * BEAT * 0.5, m, amp, 1.0, i % 2 ? 0.25 : -0.25);
+      if (octave) musicBox(bar * BAR + i * BEAT * 0.5, m + 12, amp * 0.35, 0.7, i % 2 ? -0.3 : 0.3);
+    });
+  }
+  function subLine(bar, amp = 0.7, drive = 3) {
+    for (const [st, m, len, from] of bar % 2 ? SUB_B : SUB_A) slide808(bar * BAR + st * STEP, m, len * STEP, amp, from, drive);
+  }
+
+  // -------------------------------------------------------------------------
+  // New sound effects
+  // -------------------------------------------------------------------------
+  function pop(t, amp = 0.16) {
+    const o = ctx.createOscillator();
+    o.type = "sine";
+    o.frequency.setValueAtTime(700, t);
+    o.frequency.exponentialRampToValueAtTime(1500, t + 0.05);
+    const g = ctx.createGain();
+    env(g.gain, t, 0.002, amp, 0.08);
+    o.connect(g);
+    g.connect(fx);
+    o.start(t);
+    o.stop(t + 0.12);
+  }
+  // Vacuum suction: band-passed noise sweeping up, with a fast wobble.
+  function vacuum(t0, t1, amp = 0.3) {
+    const n = noise(t0, t1 - t0);
+    const bp = ctx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.Q.value = 1.2;
+    bp.frequency.setValueAtTime(700, t0);
+    bp.frequency.exponentialRampToValueAtTime(2600, t1);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(amp, t0 + 0.12);
+    g.gain.setValueAtTime(amp, t1 - 0.1);
+    g.gain.linearRampToValueAtTime(0.0001, t1);
+    const wob = ctx.createOscillator();
+    wob.frequency.value = 17;
+    const wobG = ctx.createGain();
+    wobG.gain.value = amp * 0.35;
+    wob.connect(wobG);
+    wobG.connect(g.gain);
+    n.connect(bp);
+    bp.connect(g);
+    pan(g, 0.2, fx);
+    wob.start(t0);
+    wob.stop(t1);
+  }
+  function heartbeat(t, amp = 0.55) {
+    for (const [dt, a] of [
+      [0, 1],
+      [0.2, 0.7],
+    ]) {
+      const o = ctx.createOscillator();
+      o.frequency.setValueAtTime(70, t + dt);
+      o.frequency.exponentialRampToValueAtTime(42, t + dt + 0.12);
+      const g = ctx.createGain();
+      env(g.gain, t + dt, 0.004, amp * a, 0.16);
+      o.connect(g);
+      g.connect(fx);
+      o.start(t + dt);
+      o.stop(t + dt + 0.25);
+    }
+  }
+  // Record scratch: resonant noise sweeping down, up, down.
+  function scratch(t, amp = 0.35) {
+    const n = noise(t, 0.35);
+    const bp = ctx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.Q.value = 7;
+    bp.frequency.setValueAtTime(3200, t);
+    bp.frequency.exponentialRampToValueAtTime(450, t + 0.1);
+    bp.frequency.exponentialRampToValueAtTime(2600, t + 0.2);
+    bp.frequency.exponentialRampToValueAtTime(600, t + 0.32);
+    const g = ctx.createGain();
+    env(g.gain, t, 0.004, amp * 3, 0.3);
+    n.connect(bp);
+    bp.connect(g);
+    g.connect(fx);
+  }
+  function ding(t, amp = 0.2) {
+    for (const [f, a] of [
+      [1760, 1],
+      [2637, 0.5],
+      [3520, 0.25],
+    ]) {
+      const o = ctx.createOscillator();
+      o.frequency.value = f;
+      const g = ctx.createGain();
+      env(g.gain, t, 0.002, amp * a, 0.9);
+      o.connect(g);
+      g.connect(fx);
+      send(g, 0.4);
+      o.start(t);
+      o.stop(t + 1);
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Arrangement. Cut list: short/videos/chair-ghost/edl.json (120 BPM grid).
+  // -------------------------------------------------------------------------
+  const CUTS = [1, 2, 3, 4.5, 6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5];
+  const CAPTIONS = [0, 2, 3, 4.5, 6, 7.5, 9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5];
+
+  // Bar 1 (0-2s): hook. Pad + music box, the chair slams the lens at 1.0.
   boom(0, 0.8, 1.6);
-  groove(0, { ...HOOK, claps: [] });
+  pad(0, 2, CHORD[0], 0.1);
+  box(0, 0.16);
   kick(1.0, 1, true);
   crash(1.0, 0.45, 1.0);
   oof(1.02, 0.6, 1);
-  whoosh(1.7, 0.3, 0.22); // into "FIND THE GHOST" at 2.0
+  slide808(1.0, 42, 0.9, 0.7, 54);
 
-  // Bars 2-4 (2-8s): the round starts, the innocent chair, "...RIGHT?", the swoop.
-  groove(1, HOOK);
-  blip(2.0, 1400, 0.16);
-  whoosh(2.7, 0.3, 0.18);
-  groove(2, HOOK);
-  stinger(4.5, 0.26); // "...RIGHT?"
-  groove(3, HOOK);
+  // Bars 2-5 (2-10s): the setup. Light trap groove under the music box.
+  for (let b = 1; b < 5; b++) {
+    trap(b, { kicks: [0, 10] });
+    box(b, 0.17);
+    subLine(b, 0.55, 2.5);
+    pad(b * BAR, b * BAR + BAR, CHORD[b % 4], 0.08);
+  }
+  ding(2.0, 0.14); // the round starts
+  heartbeat(3.0);
+  heartbeat(3.75); // "JUST A CHAIR..."
+  scratch(4.5); // "...RIGHT?"
+  stinger(4.55, 0.24);
   whoosh(6.2, 0.45, 0.42, true); // the chair swoops over the camera
   boom(6.6, 0.55, 1.0);
-
-  // Bar 5 (8-10s): cornered at the stairs, draining starts at 9.0.
-  groove(4, { ...HOOK, claps: [] });
-  riser(9.0, 10.5, 0.4);
+  vacuum(9.0, 10.5, 0.3); // DRAIN IT
+  riser(9.0, 10.5, 0.35);
 
   // Bar 6 (10-12s): the slam at 10.5, filter closes, 0.25s of silence before the drop.
-  kick(10.0, 0.8);
-  bass(10.0, 38, 0.5, 0.45, 2);
   kick(10.5, 1, true);
   boom(10.5, 0.95, 1.4);
   crash(10.5, 0.5, 1.0);
@@ -748,33 +1009,51 @@ export async function renderSoundtrack({ gainDb = 0 } = {}) {
   oof(10.55, 0.5, 1.1);
   musicFilter.frequency.setValueAtTime(18000, 10.49);
   musicFilter.frequency.exponentialRampToValueAtTime(400, 11.5);
+  pad(10.5, 11.75, CHORD[1], 0.1);
   riser(10.7, 11.75, 0.5);
   snareRoll(11.0, 11.75, 0.15, 0.8);
-  // 11.75 - 12.0: silence
 
-  // Bars 7-9 (12-18s): DROP. The mirror, the drain, the reveal, the run.
+  // Bars 7-9 (12-18s): DROP. Full trap, driven 808 slides, the ghost choir.
   musicFilter.frequency.setValueAtTime(18000, 11.75);
   boom(12.0, 1.0, 2.0);
   crash(12.0, 0.5, 1.4);
-  for (let b = 6; b < 9; b++) groove(b, DROP);
-  whoosh(13.25, 0.3, 0.3);
-  boom(15.0, 0.85, 1.6); // slow-mo reveal: the ghost bursts out of the mirror
-  stinger(15.0, 0.3);
+  for (let b = 6; b < 9; b++) {
+    trap(b, { kicks: [0, 3, 10], hats16: true, rolls: true, hatAmp: 0.16, pumpOn: true });
+    box(b, 0.19, true);
+    subLine(b, 0.85, 3.8);
+    choir(b * BAR, b * BAR + BAR, CHORD[b % 4].map((m) => m + 12), 0.16);
+  }
+  vacuum(13.5, 15.0, 0.3); // SUCK IT OUT
+  boom(15.0, 0.85, 1.6); // slow-mo reveal
+  stinger(15.0, 0.28);
   sparkle(15.0, 0.18);
-  whoosh(16.25, 0.3, 0.3);
+  boom(16.5, 0.9, 1.2); // "HE RAN."
   whoosh(17.45, 0.35, 0.45, false); // the ghost runs through the camera
   crash(17.75, 0.3, 0.6);
 
-  // Bar 10 (18-20s): zoom into the ghost-health HUD, half-time.
-  groove(9, HALF);
-  blip(18.0, 1200, 0.2);
-  blip(18.25, 1600, 0.2);
+  // Bar 10 (18-20s): the ghost-health HUD. Glitch, then a ding as it lands on 36%.
+  trap(9, { kicks: [0, 10] });
+  subLine(9, 0.6, 2.5);
+  pad(18, 20, CHORD[1], 0.09);
+  box(9, 0.17);
+  stutter(18.0, 0.25, 0.14);
+  ding(19.0, 0.18);
 
   // Bar 11 (20-22s): the swoop again; riser + roll resolve into the boom at 0.0 (loop).
-  groove(10, { ...HALF, claps: [] });
+  trap(10, { kicks: [0, 10] });
+  subLine(10, 0.55, 2.5);
+  pad(20, 22, CHORD[0], 0.09);
+  box(10, 0.16);
   whoosh(19.8, 0.45, 0.38, true);
   riser(21.0, 22.0, 0.45);
   snareRoll(21.25, 22.0, 0.12, 0.6);
+
+  // Every cut gets a whoosh leading into it; every caption a pop.
+  CUTS.forEach((c) => whoosh(c - 0.2, 0.22, 0.14, true));
+  CAPTIONS.forEach((c) => {
+    pop(c, 0.14);
+    pop(c + STEP, 0.1);
+  });
 
   // -------------------------------------------------------------------------
   // Render, fold the tail over the loop point, limit, encode.
