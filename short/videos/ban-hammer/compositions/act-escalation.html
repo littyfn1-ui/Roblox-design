@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>act-escalation</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #act-escalation-root {
+          position: absolute;
+          inset: 0;
+        }
+      </style>
+      <div id="act-escalation-root" data-composition-id="act-escalation" data-width="1080" data-height="1920" data-duration="10.5">
+<!-- S4 4.0-5.5: they noticed -->
+            <section id="s4" class="shot clip" data-start="0" data-duration="1.5" data-track-index="1">
+              <div class="cam" id="s4-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="actor" id="s4-me" style="left: 420px; top: 880px">
+                  <div class="av noob" data-view="front" data-held="true"></div>
+                </div>
+              </div>
+              <div class="panel chat" id="s4-chat" style="top: 220px">
+                <p id="s4-l1"><b class="c">[Bacon_Hair]:</b> who has the hammer??</p>
+                <p id="s4-l2"><b class="y">[Guest_1337]:</b> bro WHAT</p>
+                <p id="s4-l3"><b class="r">[ProGamer99]:</b> report him</p>
+              </div>
+              <div class="cap" style="top: 1180px">
+                <span class="ln w" id="s4-a" style="font-size: 160px">THEY</span>
+                <span class="ln r" id="s4-b" style="font-size: 160px">NOTICED</span>
+              </div>
+            </section>
+<!-- S5 5.5-6.5: admin joined -->
+            <section id="s5" class="shot clip" data-start="1.5" data-duration="1" data-track-index="2">
+              <div class="cam" id="s5-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="actor" id="s5-admin" style="left: 560px; top: 880px">
+                  <div class="tag admin">[ADMIN] Mod_Zero</div>
+                  <div class="av admin" data-view="front"></div>
+                </div>
+                <div class="actor" id="s5-me" style="left: 250px; top: 880px">
+                  <div class="av noob" data-view="front" data-held="true"></div>
+                </div>
+              </div>
+              <div class="banner" id="s5-banner" style="top: 400px">
+                <span class="ln w" style="font-size: 124px">ADMIN JOINED</span>
+              </div>
+            </section>
+<!-- S6 6.5-8.0: drop it -->
+            <section id="s6" class="shot clip" data-start="2.5" data-duration="1.5" data-track-index="3">
+              <div class="cam" id="s6-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="actor" id="s6-admin" style="left: 420px; top: 880px">
+                  <div class="tag admin">[ADMIN] Mod_Zero</div>
+                  <div class="av admin" data-view="front"></div>
+                </div>
+              </div>
+              <div class="bubble" id="s6-bubble" style="top: 300px">
+                <span>DROP IT.</span>
+                <span style="color: var(--r)">NOW.</span>
+              </div>
+            </section>
+<!-- S7 8.0-9.0: over-the-shoulder swing (speed ramp) -->
+            <section id="s7" class="shot clip" data-start="4" data-duration="1" data-track-index="1">
+              <div class="cam" id="s7-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="actor" id="s7-admin" style="left: 480px; top: 860px">
+                  <div class="tag admin">[ADMIN] Mod_Zero</div>
+                  <div class="av admin" data-view="front"></div>
+                </div>
+              </div>
+              <div class="actor" id="s7-me" style="left: 60px; top: 1180px">
+                <div class="av noob" data-view="back" data-held="true" id="s7-av"></div>
+              </div>
+              <div class="xhair"></div>
+              <div class="cap" style="top: 330px">
+                <span class="ln y" id="s7-a" style="font-size: 240px" data-layout-allow-overlap="true">NO.</span>
+              </div>
+            </section>
+<!-- S8 9.0-10.0: impact, BANNED -->
+            <section id="s8" class="shot clip" data-start="5" data-duration="1" data-track-index="2">
+              <div class="cam" id="s8-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="actor" id="s8-admin" style="left: 420px; top: 880px">
+                  <div class="av admin" data-view="front"></div>
+                </div>
+                <div class="burst" id="s8-burst" style="left: 540px; top: 1000px"></div>
+              </div>
+              <div class="panel" id="s8-count" style="right: 50px; top: 300px; width: 330px; height: 110px">
+                <div class="mono" id="s8-n" style="position: absolute; left: 0; right: 0; top: 24px; text-align: center; font-size: 50px; color: var(--paper)">12/12</div>
+              </div>
+              <div class="cap" style="top: 820px">
+                <span class="ln gl" data-layout-allow-overlap="true" id="s8-a" style="font-size: 190px"><span class="ghost gr" data-layout-allow-overlap="true">BANNED</span><span class="ghost gc" data-layout-allow-overlap="true">BANNED</span><span class="main r" data-layout-allow-overlap="true">BANNED</span></span>
+              </div>
+            </section>
+<!-- S9 10.0-11.5: it bans anyone (list speed ramp) -->
+            <section id="s9" class="shot clip" data-start="6" data-duration="1.5" data-track-index="3">
+              <div class="panel lb" id="s9-lb" style="left: 110px; top: 250px; width: 860px; height: 960px; padding: 36px 50px">
+                <p style="color: var(--y)">PLAYERS <span id="s9-n" style="float: right">11/12</span></p>
+                <p>xX_Noob_Xx (you)</p>
+                <p>Bacon_Hair<i class="strike"></i></p>
+                <p>Guest_1337<i class="strike"></i></p>
+                <p>ProGamer99<i class="strike"></i></p>
+                <p>ObbyKing<i class="strike"></i></p>
+                <p>LavaJumper<i class="strike"></i></p>
+                <p>Slime_Lord<i class="strike"></i></p>
+                <p>CoolKid_22<i class="strike"></i></p>
+                <p>NotAHacker<i class="strike"></i></p>
+                <p>Pizza_Dude<i class="strike"></i></p>
+                <p>Zoom_Zoom<i class="strike"></i></p>
+              </div>
+              <div class="cap" style="top: 1250px">
+                <span class="ln w" id="s9-a" style="font-size: 150px">IT BANS</span>
+                <span class="ln r" id="s9-b" style="font-size: 150px">ANYONE</span>
+              </div>
+            </section>
+<!-- S10 11.5-13.0: only me left -->
+            <section id="s10" class="shot clip" data-start="7.5" data-duration="1.5" data-track-index="1">
+              <div class="cam" id="s10-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="actor" id="s10-me" style="left: 420px; top: 880px">
+                  <div class="tag">xX_Noob_Xx</div>
+                  <div class="av noob" data-view="front" data-held="true"></div>
+                </div>
+              </div>
+              <div class="cap" style="top: 300px">
+                <span class="ln r" id="s10-n" style="font-size: 300px">1/12</span>
+              </div>
+              <div class="cap" style="top: 1300px">
+                <span class="ln w" id="s10-a" style="font-size: 140px">ONLY ME</span>
+                <span class="ln w" id="s10-b" style="font-size: 140px">LEFT</span>
+              </div>
+            </section>
+<!-- S11 13.0-14.5: then it turned on me -->
+            <section id="s11" class="shot clip" data-start="9" data-duration="1.5" data-track-index="2">
+              <div class="cam" id="s11-cam">
+                <div class="hammer" id="s11-h" style="left: 240px; top: 520px; width: 600px; height: 930px">
+                  <div class="hglow red"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                  <div class="eyes" id="s11-eyes"><i></i><i></i></div>
+                </div>
+              </div>
+              <div class="cap" style="top: 250px">
+                <span class="ln w" id="s11-a" style="font-size: 150px">THEN IT</span>
+                <span class="ln w" id="s11-b" style="font-size: 150px">TURNED</span>
+              </div>
+              <div class="cap" style="top: 1420px">
+                <span class="ln r" id="s11-c" style="font-size: 200px">ON ME</span>
+              </div>
+            </section>      </div>
+      <script>
+        (function () {
+          "use strict";
+          // Global start of this act; every position below is written in GLOBAL
+          // seconds on the 120 BPM grid and shifted by BH.kit.
+          var T0 = 4;
+          var raw = gsap.timeline({ paused: true });
+          var root = document.getElementById("act-escalation-root");
+          BH.buildWorlds(root);
+          BH.buildAvatars(root);
+          var K = BH.kit(raw, T0);
+          var tl = K.tl, say = K.say, cam = K.cam, glitch = K.glitch, fire = K.fire, glowPulse = K.glowPulse;
+          var $ = BH.$, $$ = BH.$$, BEAT = BH.BEAT, STEP = BH.STEP;
+          var t;
+  var burst8 = BH.buildBurst("#s8-burst", 26, 8);
+  // Leaderboard counter: a setter object, so a tl.set() rewrites the text on seek.
+  var s9n = $("#s9-n");
+  var counter = {};
+  var countValue = 11;
+  Object.defineProperty(counter, "n", {
+    get: function () {
+      return countValue;
+    },
+    set: function (v) {
+      countValue = v;
+      s9n.textContent = Math.round(v) + "/12";
+    },
+  });
+  // Player-count chip in S8: 12/12 -> 11/12
+  $("#s8-n").innerHTML =
+    '<span id="s8-n1" style="position:absolute;left:0;right:0">12/12</span>' +
+    '<span id="s8-n2" style="position:absolute;left:0;right:0;color:#ff1e27;opacity:0">11/12</span>';
+
+  // S4 4.0-5.5 - chat blows up. Slow shift-lock push 1.5 -> 1.9.
+  t = 4;
+  cam("#s4-cam", "540px 1450px", { scale: 1.2 }, { scale: 1.4 }, t, 0.15, "expo.out");
+  tl.to("#s4-cam", { scale: 1.6, duration: 1.35, ease: "power1.in" }, t + 0.15);
+  tl.fromTo("#s4-me .arm.r", { rotation: -20 }, { rotation: -32, duration: 1.5, ease: "sine.inOut" }, t);
+  tl.fromTo("#s4-chat", { x: -900 }, { x: 0, duration: 0.16, ease: "expo.out" }, t);
+  ["#s4-l1", "#s4-l2", "#s4-l3"].forEach(function (l, i) {
+    tl.fromTo(l, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.08, ease: "power2.out" }, t + i * BEAT * 0.5);
+  });
+  say("#s4-a", "left", t + STEP, 5.5);
+  say("#s4-b", "right", t + 2 * STEP, 5.5);
+  // S5 5.5-6.5 - ADMIN JOINED (alarm + boom).
+  t = 5.5;
+  cam("#s5-cam", "540px 1000px", { scale: 1.75, rotation: -4 }, { scale: 1.5, rotation: 0 }, t, 0.25, "expo.out");
+  tl.to("#s5-cam", { scale: 1.6, duration: 0.75, ease: "none" }, t + 0.25);
+  tl.fromTo("#s5-banner", { scaleY: 0, rotation: -4 }, { scaleY: 1, rotation: -4, duration: 0.12, ease: "power4.out" }, t);
+  tl.to("#s5-banner", { rotation: -2, scale: 1.04, duration: 0.88, ease: "none" }, t + 0.12);
+  tl.fromTo("#s5-admin", { y: -1300 }, { y: 0, duration: 0.12, ease: "power3.in" }, t);
+  tl.fromTo("#s5-me", { x: 0 }, { x: -40, duration: 0.2, ease: "power2.out" }, t + 0.12);
+  tl.fromTo("#s5-me .arm.r", { rotation: -20 }, { rotation: -20, duration: 0.01 }, t);
+  // S6 6.5-8.0 - "DROP IT. NOW." Accelerating push onto the admin (speed ramp).
+  t = 6.5;
+  cam("#s6-cam", "540px 960px", { scale: 1.5, rotation: -2 }, { scale: 2, rotation: 2 }, t, 1.5, "power2.in");
+  tl.fromTo("#s6-admin .arm.r", { rotation: 0 }, { rotation: -100, duration: 0.2, ease: "back.out(2)" }, t + 0.1);
+  tl.fromTo("#s6-bubble", { scale: 0, rotation: -6, transformOrigin: "50% 100%" }, { scale: 1, rotation: -2, duration: 0.2, ease: "back.out(2.5)" }, t);
+  tl.to("#s6-bubble", { rotation: 1, duration: 1.3, ease: "none" }, t + 0.2);
+  tl.fromTo("#s6-bubble span:last-child", { scale: 1 }, { scale: 1.18, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.out" }, 7.0);
+  tl.to("#s6-bubble span:last-child", { scale: 1.18, duration: 0.08, yoyo: true, repeat: 1, ease: "power2.out" }, 7.5);
+  // S7 8.0-9.0 - over-the-shoulder shift-lock swing: slow wind-up, then snap.
+  t = 8;
+  cam("#s7-cam", "600px 1000px", { scale: 1.5 }, { scale: 1.6 }, t, 0.75, "none");
+  tl.to("#s7-cam", { scale: 1.9, duration: 0.25, ease: "expo.in" }, t + 0.75);
+  tl.fromTo("#s7-me", { scale: 2.6, x: -60, transformOrigin: "50% 100%" }, { scale: 2.7, x: -40, duration: 1, ease: "none" }, t);
+  tl.set("#s7-me .held", { rotation: 180, transformOrigin: "50% 100%" }, t);
+  tl.fromTo("#s7-me .arm.r", { rotation: 20 }, { rotation: 200, duration: 0.7, ease: "power2.out" }, t);
+  tl.to("#s7-me .arm.r", { rotation: 330, duration: 0.2, ease: "expo.in" }, t + 0.75);
+  say("#s7-a", "pop", t, 9.0, 1.1);
+  // S8 9.0-10.0 - IMPACT. The admin is launched; BANNED.
+  t = 9;
+  cam("#s8-cam", "540px 1000px", { scale: 1.9, rotation: 6 }, { scale: 1.5, rotation: 0 }, t, 0.4, "expo.out");
+  tl.to("#s8-cam", { scale: 1.44, duration: 0.6, ease: "none" }, t + 0.4);
+  tl.fromTo("#s8-admin", { x: 0, y: 0, rotation: 0, scale: 1 }, { x: 760, y: -1150, rotation: 900, scale: 0.3, duration: 0.7, ease: "power2.out" }, t);
+  fire(burst8, t, 0.7);
+  say("#s8-a", "stamp", t + 0.02, 10.0, 1.08);
+  glitch("#s8-a", t + 0.02, 0.5, 18);
+  tl.fromTo("#s8-count", { x: 520 }, { x: 0, duration: 0.15, ease: "expo.out" }, t + 0.05);
+  tl.fromTo("#s8-n1", { opacity: 1 }, { opacity: 0, duration: 0.01 }, t + 0.3);
+  tl.fromTo("#s8-n2", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(3)" }, t + 0.3);
+  // S9 10.0-11.5 - it bans anyone. Strikes speed-ramp with the oofs.
+  t = 10;
+  tl.fromTo("#s9-lb", { scale: 1.2, rotation: -3 }, { scale: 1, rotation: 0, duration: 0.14, ease: "expo.out" }, t);
+  tl.to("#s9-lb", { y: -70, rotation: 1.5, duration: 1.36, ease: "expo.in" }, t + 0.14);
+  var strikeTimes = [10.0, 10.36, 10.66, 10.9, 11.08, 11.22, 11.33, 11.42, 11.46, 11.49];
+  var rows = $$("#s9-lb p");
+  tl.set(counter, { n: 11 }, t);
+  strikeTimes.forEach(function (st, i) {
+    var row = rows[i + 2];
+    tl.fromTo(row.querySelector(".strike"), { scaleX: 0 }, { scaleX: 1, duration: 0.05, ease: "none" }, st);
+    tl.fromTo(row, { opacity: 1, x: 0 }, { opacity: 0.45, x: 18, duration: 0.05, ease: "none" }, st);
+    tl.set(counter, { n: 10 - i }, st);
+  });
+  say("#s9-a", "left", t, 11.5);
+  say("#s9-b", "right", t + STEP, 11.5);
+  // S10 11.5-13.0 - empty obby, "1/12". Slow lonely push 1.0 -> 1.5.
+  t = 11.5;
+  cam("#s10-cam", "540px 1040px", { scale: 1, rotation: 0 }, { scale: 1.5, rotation: -2 }, t, 1.5, "power1.inOut");
+  tl.fromTo("#s10-me", { y: 0 }, { y: -10, duration: 0.75, yoyo: true, repeat: 1, ease: "sine.inOut" }, t);
+  tl.fromTo("#s10-me .arm.r", { rotation: -20 }, { rotation: -26, duration: 1.5, ease: "none" }, t);
+  say("#s10-n", "stamp", t, 13.0, 1.05);
+  say("#s10-a", "rise", t + STEP, 13.0, 1.04);
+  say("#s10-b", "rise", t + 2 * STEP, 13.0, 1.04);
+  // S11 13.0-14.5 - the hammer turns to face camera; eyes open on the stinger.
+  t = 13;
+  cam("#s11-cam", "540px 700px", { scale: 1 }, { scale: 1.25 }, t, 1.5, "power1.in");
+  tl.fromTo("#s11-h", { rotationY: 78, transformPerspective: 1400, rotation: 8 }, { rotationY: 0, rotation: -4, duration: 0.9, ease: "power2.inOut" }, t);
+  tl.to("#s11-h", { rotation: 2, duration: 0.6, ease: "none" }, t + 0.9);
+  tl.fromTo("#s11-eyes", { opacity: 0, scale: 0.2 }, { opacity: 1, scale: 1, duration: 0.12, ease: "back.out(3)" }, t + BEAT);
+  glowPulse("#s11-h .hglow", t, 1.5);
+  say("#s11-a", "drop", t, 14.5);
+  say("#s11-b", "drop", t + STEP, 14.5);
+  say("#s11-c", "stamp", t + BEAT, 14.5, 1.08);
+
+          window.__timelines["act-escalation"] = raw;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

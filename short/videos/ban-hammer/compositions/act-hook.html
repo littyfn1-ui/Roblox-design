@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>act-hook</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #act-hook-root {
+          position: absolute;
+          inset: 0;
+        }
+      </style>
+      <div id="act-hook-root" data-composition-id="act-hook" data-width="1080" data-height="1920" data-duration="4">
+<!-- S1 0.0-1.5: hook -->
+            <section id="s1" class="shot clip" data-start="0" data-duration="1.5" data-track-index="1">
+              <div class="cam" id="s1-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="hammer" id="s1-h" style="left: 390px; top: 660px; width: 300px; height: 465px">
+                  <div class="hglow"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                </div>
+              </div>
+              <div class="cap" style="top: 170px">
+                <span class="ln w" id="s1-a" style="font-size: 140px">THIS ITEM</span>
+                <span class="ln y" id="s1-b" style="font-size: 160px">DOESN'T</span>
+                <span class="ln y" id="s1-c" style="font-size: 160px">EXIST</span>
+              </div>
+            </section>
+<!-- S2 1.5-3.0: the Ban Hammer -->
+            <section id="s2" class="shot clip" data-start="1.5" data-duration="1.5" data-track-index="2">
+              <div class="cam" id="s2-cam">
+                <div class="hammer" id="s2-h" style="left: 190px; top: 470px; width: 700px; height: 1085px">
+                  <div class="hglow"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                </div>
+              </div>
+              <div class="card" id="s2-card" style="left: 90px; top: 1180px; width: 900px; height: 250px">
+                <div class="mono" style="position: absolute; left: 44px; top: 34px; font-size: 38px; color: var(--r)">[ADMIN ITEM]</div>
+                <div class="mono" style="position: absolute; right: 44px; top: 34px; font-size: 38px; color: var(--c)">PRICE: ???</div>
+                <div style="position: absolute; left: 40px; top: 96px; font-size: 104px; line-height: 1; color: var(--paper); -webkit-text-stroke: 10px #000; paint-order: stroke fill">BAN HAMMER</div>
+              </div>
+              <div class="stamp" id="s2-stamp" style="left: 300px; top: 1030px">UNRELEASED</div>
+              <div class="cap" style="top: 150px">
+                <span class="ln y" id="s2-a" style="font-size: 150px">THE BAN</span>
+                <span class="ln y" id="s2-b" style="font-size: 150px">HAMMER</span>
+              </div>
+            </section>
+<!-- S3 3.0-4.0: I found it -->
+            <section id="s3" class="shot clip" data-start="3" data-duration="1" data-track-index="3">
+              <div class="cam" id="s3-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="hammer" id="s3-h" style="left: 390px; top: 660px; width: 300px; height: 465px">
+                  <div class="hglow"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                </div>
+                <div class="actor" id="s3-me" style="left: 250px; top: 880px">
+                  <div class="tag">xX_Noob_Xx</div>
+                  <div class="av noob" data-view="front" data-held="true"></div>
+                </div>
+                <div class="burst" id="s3-burst" style="left: 470px; top: 960px"></div>
+              </div>
+              <div class="hotbar" id="s3-bar" style="top: 1500px">
+                <div class="slot on"><span class="num">1</span><svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg></div>
+                <div class="slot"><span class="num">2</span></div>
+                <div class="slot"><span class="num">3</span></div>
+              </div>
+              <div class="cap" style="top: 330px">
+                <span class="ln y" id="s3-a" style="font-size: 170px">I FOUND</span>
+                <span class="ln y" id="s3-b" style="font-size: 170px">IT.</span>
+              </div>
+            </section>      </div>
+      <script>
+        (function () {
+          "use strict";
+          // Global start of this act; every position below is written in GLOBAL
+          // seconds on the 120 BPM grid and shifted by BH.kit.
+          var T0 = 0;
+          var raw = gsap.timeline({ paused: true });
+          var root = document.getElementById("act-hook-root");
+          BH.buildWorlds(root);
+          BH.buildAvatars(root);
+          var K = BH.kit(raw, T0);
+          var tl = K.tl, say = K.say, cam = K.cam, glitch = K.glitch, fire = K.fire, glowPulse = K.glowPulse;
+          var $ = BH.$, $$ = BH.$$, BEAT = BH.BEAT, STEP = BH.STEP;
+          var t;
+  var burst3 = BH.buildBurst("#s3-burst", 16, 3, ["#00ffff", "#ffd700", "#fffdf2"]);
+
+  // S1 0.0-1.5 - hook. Frame 0 matches the last frame of S24 (seamless loop).
+  t = 0;
+  cam("#s1-cam", "540px 760px", { scale: 2, rotation: -3 }, { scale: 1.5, rotation: 0 }, t, 0.35, "expo.out");
+  tl.to("#s1-cam", { scale: 1.42, duration: 1.15, ease: "none" }, t + 0.35);
+  tl.fromTo("#s1-h", { y: 0, rotation: -4 }, { y: -26, rotation: 4, duration: 1.5, ease: "sine.inOut" }, t);
+  glowPulse("#s1-h .hglow", t, 1.0);
+  tl.fromTo("#s1-a", { scale: 1.18 }, { scale: 1, duration: 0.1, ease: "power4.out" }, t);
+  tl.to("#s1-a", { scale: 1.05, duration: 1.38, ease: "none" }, t + 0.12);
+  say("#s1-b", "slam", t + STEP, 1.5);
+  say("#s1-c", "slam", t + 2 * STEP, 1.5);
+  // S2 1.5-3.0 - close-up, the name, UNRELEASED stamp on the beat.
+  t = 1.5;
+  cam("#s2-cam", "540px 700px", { x: 460, scale: 1.3, rotation: 9 }, { x: 0, scale: 1, rotation: -4 }, t, 0.2, "expo.out");
+  tl.to("#s2-cam", { scale: 1.14, rotation: -6, duration: 1.3, ease: "none" }, t + 0.2);
+  glowPulse("#s2-h .hglow", t, 1.5);
+  say("#s2-a", "drop", t, 3.0);
+  say("#s2-b", "drop", t + STEP, 3.0);
+  tl.fromTo("#s2-card", { y: 520 }, { y: 0, duration: 0.2, ease: "expo.out" }, t + STEP);
+  tl.to("#s2-card", { y: -14, duration: 1.1, ease: "none" }, t + STEP + 0.2);
+  say("#s2-stamp", "stamp", 2.0, 3.0, 1.04);
+  // S3 3.0-4.0 - the grab.
+  t = 3;
+  cam("#s3-cam", "440px 1000px", { scale: 1.7, rotation: 3 }, { scale: 1.5, rotation: 0 }, t, 0.3, "expo.out");
+  tl.to("#s3-cam", { scale: 1.6, duration: 0.7, ease: "none" }, t + 0.3);
+  tl.fromTo("#s3-me", { x: -520 }, { x: 0, duration: 0.3, ease: "power2.out" }, t);
+  tl.fromTo("#s3-me", { y: -420 }, { y: 0, duration: 0.3, ease: "power2.in" }, t);
+  tl.fromTo("#s3-me .held", { opacity: 0, rotation: 180, transformOrigin: "50% 100%" }, { opacity: 1, rotation: 180, duration: 0.01 }, t + 0.36);
+  tl.fromTo("#s3-me .arm.r", { rotation: 0 }, { rotation: -150, duration: 0.12, ease: "power3.out" }, t + 0.3);
+  tl.to("#s3-me .arm.r", { rotation: -165, duration: 0.58, ease: "none" }, t + 0.42);
+  tl.fromTo("#s3-h", { x: 0, y: 0, scale: 1, opacity: 1 }, { x: -60, y: -40, scale: 0.4, opacity: 0, duration: 0.1, ease: "power2.in" }, t + 0.26);
+  fire(burst3, t + 0.36, 0.5);
+  tl.fromTo("#s3-bar", { y: 340 }, { y: 0, duration: 0.2, ease: "back.out(2)" }, t + 0.36);
+  say("#s3-a", "pop", t, 4.0);
+  say("#s3-b", "slam", t + STEP, 4.0);
+
+          window.__timelines["act-hook"] = raw;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

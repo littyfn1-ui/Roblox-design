@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>THE BAN HAMMER</title>
+    <script src="./assets/gsap.min.js"></script>
+    <script src="./assets/camera-shake.js"></script>
+    <script src="./assets/lib.js"></script>
+    <style>
+      :root {
+        --y: #ffd700;
+        --r: #ff1e27;
+        --c: #00ffff;
+        --bg: #0f0f12;
+        --ink: #050507;
+        --paper: #fffdf2;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: "Archivo Black", sans-serif;
+      }
+
+      /* ---------------- persistent background (not a clip) ---------------- */
+      #bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .glow {
+        position: absolute;
+        border-radius: 50%;
+      }
+      #glow-c {
+        left: -420px;
+        top: -260px;
+        width: 1300px;
+        height: 1300px;
+        background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, rgba(0, 255, 255, 0) 62%);
+      }
+      #glow-r {
+        right: -520px;
+        bottom: -380px;
+        width: 1500px;
+        height: 1500px;
+        background: radial-gradient(circle, rgba(255, 30, 39, 0.2) 0%, rgba(255, 30, 39, 0) 62%);
+      }
+      #stars {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 2400px;
+        background-image:
+          radial-gradient(circle, rgba(0, 255, 255, 0.55) 0 3px, transparent 4px),
+          radial-gradient(circle, rgba(255, 215, 0, 0.45) 0 3px, transparent 4px),
+          radial-gradient(circle, rgba(255, 253, 242, 0.35) 0 2px, transparent 3px);
+        background-size:
+          240px 240px,
+          360px 240px,
+          180px 120px;
+        background-position:
+          30px 50px,
+          200px 170px,
+          90px 20px;
+      }
+      #pulse {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 30, 39, 0) 30%, rgba(255, 30, 39, 0.55) 100%);
+        opacity: 0;
+      }
+
+      /* ---------------- camera stack ---------------- */
+      #frame {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      #shake {
+        position: absolute;
+        inset: 0;
+      }
+      #rig {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+      }
+      #rig > [data-composition-src] {
+        position: absolute;
+        inset: 0;
+      }
+      .shot {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .cam {
+        position: absolute;
+        inset: 0;
+      }
+      .world {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+      }
+      .layer {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* ---------------- kinetic type ---------------- */
+      .cap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        pointer-events: none;
+      }
+      .ln {
+        display: block;
+        white-space: nowrap;
+        text-transform: uppercase;
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        color: var(--paper);
+        -webkit-text-stroke: 18px #000;
+        paint-order: stroke fill;
+        text-shadow: 0 14px 0 #000;
+      }
+      .y {
+        color: var(--y);
+      }
+      .r {
+        color: var(--r);
+      }
+      .c {
+        color: var(--c);
+      }
+      .w {
+        color: var(--paper);
+      }
+
+      /* RGB split (registry rgb-glitch-text pattern: red + cyan ghosts). */
+      .gl {
+        position: relative;
+        display: block;
+        --gx: 0px;
+      }
+      .gl .ghost {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        -webkit-text-stroke: 0;
+        text-shadow: none;
+      }
+      .gl .gr {
+        color: var(--r);
+        opacity: 0.9;
+        translate: calc(var(--gx) * -1) 0;
+      }
+      .gl .gc {
+        color: var(--c);
+        opacity: 0.9;
+        translate: var(--gx) 0;
+      }
+      .gl .main {
+        position: relative;
+      }
+
+      /* ---------------- Roblox-ish UI ---------------- */
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+      }
+      .tag {
+        position: absolute;
+        left: 50%;
+        top: -86px;
+        width: 520px;
+        margin-left: -260px;
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 34px;
+        color: var(--paper);
+        -webkit-text-stroke: 8px #000;
+        paint-order: stroke fill;
+      }
+      .tag.admin {
+        color: var(--r);
+      }
+      .panel {
+        position: absolute;
+        background: rgba(8, 8, 12, 0.82);
+        border: 5px solid #000;
+        border-radius: 22px;
+        box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.35);
+      }
+      .chat {
+        left: 48px;
+        top: 300px;
+        width: 800px;
+        padding: 26px 30px;
+      }
+      .chat p {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 1.3;
+        color: var(--paper);
+        white-space: nowrap;
+      }
+      .chat b {
+        font-weight: 700;
+      }
+      .hotbar {
+        position: absolute;
+        left: 50%;
+        width: 480px;
+        margin-left: -240px;
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+      }
+      .slot {
+        position: relative;
+        width: 144px;
+        height: 144px;
+        border-radius: 18px;
+        background: rgba(8, 8, 12, 0.78);
+        border: 5px solid #000;
+        box-shadow: 0 0 0 3px rgba(255, 253, 242, 0.25);
+      }
+      .slot.on {
+        box-shadow:
+          0 0 0 6px var(--c),
+          0 0 44px rgba(0, 255, 255, 0.7);
+      }
+      .slot .num {
+        position: absolute;
+        left: 12px;
+        top: 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 30px;
+        color: var(--paper);
+      }
+      .slot svg {
+        position: absolute;
+        left: 22px;
+        top: 12px;
+        width: 100px;
+        height: 124px;
+      }
+      .qm {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 40px;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 58px;
+        color: var(--c);
+        -webkit-text-stroke: 10px #000;
+        paint-order: stroke fill;
+      }
+
+      /* ---------------- avatars (generated into .av) ---------------- */
+      .actor {
+        position: absolute;
+        width: 240px;
+        height: 330px;
+      }
+      .av {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 240px;
+        height: 330px;
+      }
+      .p {
+        position: absolute;
+        border: 6px solid #000;
+        border-radius: 8px;
+        box-shadow: inset -12px -10px 0 rgba(0, 0, 0, 0.2);
+      }
+      .p.head {
+        left: 76px;
+        top: 0;
+        width: 88px;
+        height: 84px;
+        border-radius: 22px;
+        background: var(--y);
+      }
+      .p.torso {
+        left: 60px;
+        top: 84px;
+        width: 120px;
+        height: 124px;
+      }
+      .p.arm {
+        top: 84px;
+        width: 60px;
+        height: 124px;
+      }
+      .p.arm.l {
+        left: 0;
+      }
+      .p.arm.r {
+        left: 180px;
+      }
+      .p.leg {
+        top: 208px;
+        width: 60px;
+        height: 122px;
+      }
+      .p.leg.l {
+        left: 60px;
+      }
+      .p.leg.r {
+        left: 120px;
+      }
+      .noob .torso {
+        background: #1f6fd6;
+      }
+      .noob .leg {
+        background: #7cc043;
+      }
+      .noob .arm {
+        background: var(--y);
+      }
+      .admin .torso,
+      .admin .leg,
+      .admin .arm {
+        background: #1c1c24;
+      }
+      .admin .torso::after {
+        content: "";
+        position: absolute;
+        left: 44px;
+        top: 0;
+        width: 20px;
+        height: 70px;
+        background: var(--r);
+        border: 4px solid #000;
+        border-top: 0;
+      }
+      .face {
+        position: absolute;
+        inset: 0;
+      }
+      .face .eye {
+        position: absolute;
+        top: 26px;
+        width: 12px;
+        height: 18px;
+        border-radius: 50%;
+        background: #000;
+      }
+      .face .eye.l {
+        left: 22px;
+      }
+      .face .eye.r {
+        left: 46px;
+      }
+      .face .smile {
+        position: absolute;
+        left: 20px;
+        top: 38px;
+        width: 40px;
+        height: 18px;
+        border-bottom: 6px solid #000;
+        border-radius: 0 0 24px 24px;
+      }
+      .face .shades {
+        position: absolute;
+        left: 8px;
+        top: 22px;
+        width: 64px;
+        height: 22px;
+        background: #000;
+        border-radius: 6px;
+        box-shadow: inset 8px 4px 0 rgba(255, 30, 39, 0.8);
+      }
+      .grip {
+        position: absolute;
+        left: 30px;
+        top: 112px;
+        width: 0;
+        height: 0;
+      }
+      .held {
+        position: absolute;
+        left: -60px;
+        top: -210px;
+        width: 120px;
+        height: 186px;
+      }
+
+      /* ---------------- hammer ---------------- */
+      .hammer {
+        position: absolute;
+      }
+      .hammer svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .hglow {
+        position: absolute;
+        left: -40%;
+        top: -30%;
+        width: 180%;
+        height: 100%;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 255, 255, 0.55) 0%,
+          rgba(0, 255, 255, 0.18) 38%,
+          rgba(0, 255, 255, 0) 66%
+        );
+      }
+      .hglow.red {
+        background: radial-gradient(
+          circle,
+          rgba(255, 30, 39, 0.7) 0%,
+          rgba(255, 30, 39, 0.22) 38%,
+          rgba(255, 30, 39, 0) 66%
+        );
+      }
+      .eyes {
+        position: absolute;
+        left: 24%;
+        top: 14%;
+        width: 52%;
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+      }
+      .eyes i {
+        display: block;
+        width: 22%;
+        height: 100%;
+        border-radius: 50%;
+        background: radial-gradient(circle, #fff 0 18%, var(--r) 30%, rgba(255, 30, 39, 0) 70%);
+      }
+
+      /* ---------------- misc fx ---------------- */
+      .burst {
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+      .burst i {
+        position: absolute;
+        left: -9px;
+        top: -9px;
+        width: 18px;
+        height: 18px;
+        border: 3px solid #000;
+      }
+      .xhair {
+        position: absolute;
+        left: 490px;
+        top: 910px;
+        width: 100px;
+        height: 100px;
+        border: 6px solid var(--paper);
+        border-radius: 50%;
+        box-shadow:
+          0 0 0 4px #000,
+          inset 0 0 0 4px #000;
+      }
+      .xhair::after {
+        content: "";
+        position: absolute;
+        left: 38px;
+        top: 38px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 3px solid #000;
+      }
+      .banner {
+        position: absolute;
+        left: -40px;
+        right: -40px;
+        height: 190px;
+        background: var(--r);
+        border-top: 10px solid #000;
+        border-bottom: 10px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bubble {
+        position: absolute;
+        left: 90px;
+        right: 90px;
+        padding: 30px 20px 36px;
+        background: var(--paper);
+        border: 10px solid #000;
+        border-radius: 60px;
+        text-align: center;
+      }
+      .bubble::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -58px;
+        margin-left: -30px;
+        border: 30px solid transparent;
+        border-top: 34px solid #000;
+      }
+      .bubble span {
+        display: block;
+        font-size: 124px;
+        line-height: 1;
+        color: #0f0f12;
+        letter-spacing: -0.02em;
+      }
+      .dialog {
+        position: absolute;
+        width: 820px;
+        height: 460px;
+        left: 130px;
+        background: #393b3d;
+        border: 6px solid #000;
+        border-radius: 26px;
+        box-shadow: 0 24px 0 rgba(0, 0, 0, 0.55);
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        color: var(--paper);
+      }
+      .dialog h3 {
+        margin: 34px 0 0;
+        font-size: 50px;
+        text-align: center;
+      }
+      .dialog hr {
+        margin: 26px 50px;
+        border: 0;
+        border-top: 4px solid rgba(255, 253, 242, 0.35);
+      }
+      .dialog p {
+        margin: 0 50px;
+        font-size: 36px;
+        line-height: 1.35;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .dialog .btn {
+        position: absolute;
+        left: 250px;
+        bottom: 40px;
+        width: 320px;
+        height: 84px;
+        border-radius: 16px;
+        background: var(--paper);
+        color: #0f0f12;
+        font-size: 40px;
+        line-height: 84px;
+        text-align: center;
+      }
+      .card {
+        position: absolute;
+        background: #16161c;
+        border: 8px solid #000;
+        border-radius: 34px;
+        box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.5);
+      }
+      .stamp {
+        position: absolute;
+        padding: 8px 28px 14px;
+        border: 12px solid var(--r);
+        border-radius: 18px;
+        color: var(--r);
+        font-size: 96px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        -webkit-text-stroke: 6px #000;
+        paint-order: stroke fill;
+        background: rgba(15, 15, 18, 0.6);
+        box-shadow: 0 0 0 6px #000;
+      }
+      .row {
+        position: absolute;
+        opacity: 0.8;
+        left: 60px;
+        width: 960px;
+        height: 150px;
+        background: #1a1a22;
+        border: 6px solid #000;
+        border-radius: 24px;
+        box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.3);
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+      }
+      .row .nm {
+        position: absolute;
+        left: 40px;
+        top: 34px;
+        font-size: 48px;
+        color: var(--paper);
+      }
+      .row .ct {
+        position: absolute;
+        right: 40px;
+        top: 34px;
+        font-size: 56px;
+        color: var(--c);
+      }
+      .row .ct.dead {
+        color: var(--r);
+      }
+      .lb p {
+        position: relative;
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 700;
+        font-size: 44px;
+        line-height: 1.5;
+        color: var(--paper);
+        white-space: nowrap;
+      }
+      .lb p .strike {
+        position: absolute;
+        left: -8px;
+        top: 50%;
+        width: 102%;
+        height: 10px;
+        margin-top: -5px;
+        background: var(--r);
+        border: 3px solid #000;
+        transform-origin: 0 50%;
+      }
+      .ring {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 50%;
+        border-style: solid;
+      }
+      #flash {
+        position: absolute;
+        inset: 0;
+        background: var(--paper);
+        opacity: 0;
+      }
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 48%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+      }
+      #iris {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 42%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.96) 60%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+      <!-- Shared SVG symbols: the obby world and the hammer. -->
+      <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs>
+          <symbol id="sym-hammer" viewBox="0 0 400 620">
+            <!-- handle -->
+            <rect x="178" y="196" width="44" height="386" rx="8" fill="#1c1c24" stroke="#000" stroke-width="8" />
+            <rect x="174" y="410" width="52" height="20" fill="#ffd700" stroke="#000" stroke-width="5" />
+            <rect x="174" y="458" width="52" height="20" fill="#ffd700" stroke="#000" stroke-width="5" />
+            <rect x="174" y="506" width="52" height="20" fill="#ffd700" stroke="#000" stroke-width="5" />
+            <rect x="160" y="572" width="80" height="40" rx="8" fill="#ff1e27" stroke="#000" stroke-width="7" />
+            <!-- head -->
+            <rect x="14" y="52" width="40" height="150" rx="8" fill="#ff1e27" stroke="#000" stroke-width="8" />
+            <rect x="346" y="52" width="40" height="150" rx="8" fill="#ff1e27" stroke="#000" stroke-width="8" />
+            <rect x="44" y="30" width="312" height="194" rx="14" fill="#15151b" stroke="#000" stroke-width="10" />
+            <rect x="64" y="50" width="272" height="154" rx="8" fill="none" stroke="#00ffff" stroke-width="6" />
+            <path d="M84 72 h26 M84 72 v22 M316 72 h-26 M316 72 v22 M84 182 h26 M84 182 v-22 M316 182 h-26 M316 182 v-22" stroke="#00ffff" stroke-width="6" fill="none" />
+            <text data-layout-allow-overlap="true" x="200" y="166" text-anchor="middle" font-family="Archivo Black" font-size="104" fill="#ff1e27" stroke="#000" stroke-width="8" paint-order="stroke">BAN</text>
+          </symbol>
+        </defs>
+      </svg>
+
+      <!-- Persistent background: obsidian, drifting glows, looping starfield, beat pulse. -->
+      <div id="bg" data-layout-allow-overflow="true">
+        <div id="glow-c" class="glow"></div>
+        <div id="glow-r" class="glow"></div>
+        <div id="stars"></div>
+        <div id="pulse"></div>
+      </div>
+
+      <div id="frame">
+        <div id="shake">
+          <div id="rig">
+            <div
+              id="act-hook"
+              data-composition-id="act-hook"
+              data-composition-src="compositions/act-hook.html"
+              data-start="0"
+              data-duration="4"
+              data-track-index="1"
+              data-width="1080"
+              data-height="1920"
+            ></div>
+            <div
+              id="act-escalation"
+              data-composition-id="act-escalation"
+              data-composition-src="compositions/act-escalation.html"
+              data-start="4"
+              data-duration="10.5"
+              data-track-index="1"
+              data-width="1080"
+              data-height="1920"
+            ></div>
+            <div
+              id="act-predrop"
+              data-composition-id="act-predrop"
+              data-composition-src="compositions/act-predrop.html"
+              data-start="14.5"
+              data-duration="1.5"
+              data-track-index="1"
+              data-width="1080"
+              data-height="1920"
+            ></div>
+            <div
+              id="act-drop"
+              data-composition-id="act-drop"
+              data-composition-src="compositions/act-drop.html"
+              data-start="16"
+              data-duration="8"
+              data-track-index="1"
+              data-width="1080"
+              data-height="1920"
+            ></div>
+            <div
+              id="act-loop"
+              data-composition-id="act-loop"
+              data-composition-src="compositions/act-loop.html"
+              data-start="24"
+              data-duration="6"
+              data-track-index="1"
+              data-width="1080"
+              data-height="1920"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen-space overlays -->
+      <div id="iris"></div>
+      <div id="vignette"></div>
+      <div id="flash"></div>
+
+      <audio id="soundtrack" src="./assets/soundtrack.wav" data-start="0" data-duration="30" data-volume="1"></audio>
+    </div>
+
+    <script>
+      // Root timeline: the camera rig, background, beat pumps, impact shakes,
+      // flashes and the pre-drop iris. Shots live in the five act sub-compositions.
+      // Positions are global seconds on the 120 BPM grid (STEP = 16th = 0.125s).
+      (function () {
+        "use strict";
+        var STEP = 0.125;
+        var tl = gsap.timeline({ paused: true });
+
+        // Impact shake on #shake (x / y / rotation): deterministic and decaying.
+        function shake(t, amp, dur, seed) {
+          var r = BH.rng(seed);
+          var n = Math.max(5, Math.round(dur / 0.034));
+          var d = dur / n;
+          for (var i = 0; i < n; i++) {
+            var k = 1 - i / n;
+            tl.to("#shake", { x: (r() * 2 - 1) * amp * k, y: (r() * 2 - 1) * amp * k, rotation: (r() * 2 - 1) * amp * 0.035 * k, duration: d, ease: "none" }, t + i * d);
+          }
+          tl.to("#shake", { x: 0, y: 0, rotation: 0, duration: 0.03, ease: "none" }, t + dur);
+        }
+        function flash(t, color, peak, dur) {
+          tl.set("#flash", { backgroundColor: color, opacity: peak }, t);
+          tl.to("#flash", { opacity: 0, duration: dur, ease: "power2.out" }, t + 0.001);
+        }
+        // Beat pump: the whole camera breathes on the kick (plus a red edge pulse in the drop).
+        function pump(t, amt, pulse) {
+          tl.set("#shake", { scale: 1 + amt }, t);
+          tl.to("#shake", { scale: 1, duration: 0.18, ease: "power2.out" }, t + 0.001);
+          if (pulse) {
+            tl.set("#pulse", { opacity: pulse }, t);
+            tl.to("#pulse", { opacity: 0, duration: 0.3, ease: "power2.out" }, t + 0.001);
+          }
+        }
+
+        // Registry camera-shake: continuous handheld drift on the rig for all 30s.
+        // overscan 1: shots are transparent over the shared starfield, so the rig never
+        // needs to cover its own edges, and captions stay inside the frame.
+        window.cameraShake(tl, "#rig", { profile: "handheld-normal-mild", intensity: 1, duration: 30, at: 0, fps: 30, overscan: 1 });
+
+        // Starfield scrolls exactly one tile (240px) in 30s, so the loop point matches.
+        tl.fromTo("#stars", { y: 0 }, { y: -240, duration: 30, ease: "none" }, 0);
+        // Glows breathe on a 10s cycle (6 half-cycles = back where they started at 30s).
+        tl.fromTo("#glow-c", { x: 0, y: 0, scale: 1 }, { x: 120, y: 90, scale: 1.12, duration: 5, ease: "sine.inOut", yoyo: true, repeat: 5 }, 0);
+        tl.fromTo("#glow-r", { x: 0, y: 0, scale: 1 }, { x: -110, y: -140, scale: 1.1, duration: 5, ease: "sine.inOut", yoyo: true, repeat: 5 }, 0);
+
+        // Kick pumps. Hook/verse kicks on 16th steps 0, 7, 10; drop on 0, 3, 7, 10.
+        var bar;
+        for (bar = 0; bar < 6; bar++) {
+          if (bar === 3 || bar === 4) continue; // threat + swing bars stay tense
+          [0, 7, 10].forEach(function (st) {
+            pump(bar * 2 + st * STEP, 0.012, 0);
+          });
+        }
+        for (bar = 8; bar < 12; bar++) {
+          [0, 3, 7, 10].forEach(function (st) {
+            pump(bar * 2 + st * STEP, st === 0 ? 0.04 : 0.025, st === 0 ? 0.85 : 0.5);
+          });
+        }
+        for (bar = 12; bar < 14; bar++) {
+          [0, 10].forEach(function (st) {
+            pump(bar * 2 + st * STEP, 0.015, 0);
+          });
+        }
+
+        // Impacts, on the same beats as the booms / crashes in the soundtrack.
+        flash(0, "#ffd700", 0.18, 0.12);
+        shake(0, 26, 0.3, 11); // hook
+        shake(2.0, 18, 0.22, 21); // UNRELEASED stamp
+        flash(5.5, "#ff1e27", 0.45, 0.25);
+        shake(5.5, 38, 0.35, 55); // ADMIN JOINED
+        flash(9, "#fffdf2", 0.85, 0.3);
+        shake(9, 64, 0.45, 99); // swing impact
+        flash(13.5, "#ff1e27", 0.3, 0.2);
+        shake(13.5, 16, 0.25, 131); // the eyes open
+        flash(16, "#ff1e27", 0.9, 0.35);
+        shake(16, 72, 0.5, 1616); // THE DROP
+        shake(17, 44, 0.3, 1717); // OOF
+        shake(19.05, 34, 0.28, 1919); // TERMINATED
+        flash(23, "#ff1e27", 0.8, 0.35);
+        shake(23, 56, 0.4, 2323); // YOUR SERVER
+        shake(25.55, 30, 0.3, 2525); // landing
+
+        // Pre-drop: the iris closes over the slow-motion rise, then snaps open on the drop.
+        tl.set("#iris", { opacity: 0 }, 14.5);
+        tl.to("#iris", { opacity: 0.88, duration: 1.0, ease: "power2.in" }, 14.5);
+        tl.set("#iris", { opacity: 0 }, 16);
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>

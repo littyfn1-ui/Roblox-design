@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>act-loop</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        #act-loop-root {
+          position: absolute;
+          inset: 0;
+        }
+      </style>
+      <div id="act-loop-root" data-composition-id="act-loop" data-width="1080" data-height="1920" data-duration="6">
+<!-- S21 24.0-25.5: check slot 1 -->
+            <section id="s21" class="shot clip" data-start="0" data-duration="1.5" data-track-index="1">
+              <div class="cam" id="s21-cam">
+                <div class="hotbar" id="s21-bar" style="top: 1000px">
+                  <div class="slot on" id="s21-slot"><span class="num">1</span><div class="qm">??</div></div>
+                  <div class="slot"><span class="num">2</span></div>
+                  <div class="slot"><span class="num">3</span></div>
+                </div>
+              </div>
+              <div class="cap" style="top: 330px">
+                <span class="ln w" id="s21-a" style="font-size: 170px">CHECK</span>
+                <span class="ln c" id="s21-b" style="font-size: 170px">SLOT 1</span>
+              </div>
+            </section>
+<!-- S22 25.5-27.0: don't pick it up -->
+            <section id="s22" class="shot clip" data-start="1.5" data-duration="1.5" data-track-index="2">
+              <div class="cam" id="s22-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="hammer" id="s22-h" style="left: 390px; top: 660px; width: 300px; height: 465px">
+                  <div class="hglow"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                </div>
+                <div class="burst" id="s22-burst" style="left: 540px; top: 1170px"></div>
+              </div>
+              <div class="cap" style="top: 190px">
+                <span class="ln r" id="s22-a" style="font-size: 190px">DON'T</span>
+                <span class="ln w" id="s22-b" style="font-size: 140px">PICK IT UP</span>
+              </div>
+            </section>
+<!-- S23 27.0-28.5: POV reach, seriously -->
+            <section id="s23" class="shot clip" data-start="3" data-duration="1.5" data-track-index="3">
+              <div class="cam" id="s23-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="hammer" id="s23-h" style="left: 390px; top: 660px; width: 300px; height: 465px">
+                  <div class="hglow"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                </div>
+              </div>
+              <div id="s23-arm" style="position: absolute; left: 700px; top: 1150px; width: 230px; height: 900px; background: var(--y); border: 10px solid #000; border-radius: 26px; box-shadow: inset -30px 0 0 rgba(0, 0, 0, 0.18); transform-origin: 50% 100%"></div>
+              <div class="cap" style="top: 330px">
+                <span class="ln y" id="s23-a" style="font-size: 140px">SERIOUSLY.</span>
+              </div>
+            </section>
+<!-- S24 28.5-30.0: push in, loops into S1 -->
+            <section id="s24" class="shot clip" data-start="4.5" data-duration="1.5" data-track-index="1">
+              <div class="cam" id="s24-cam">
+                <svg class="world" viewBox="0 0 1080 1920" aria-hidden="true"></svg>
+                <div class="hammer" id="s24-h" style="left: 390px; top: 660px; width: 300px; height: 465px">
+                  <div class="hglow"></div>
+                  <svg viewBox="0 0 400 620"><use href="#sym-hammer" /></svg>
+                </div>
+              </div>
+            </section>      </div>
+      <script>
+        (function () {
+          "use strict";
+          // Global start of this act; every position below is written in GLOBAL
+          // seconds on the 120 BPM grid and shifted by BH.kit.
+          var T0 = 24;
+          var raw = gsap.timeline({ paused: true });
+          var root = document.getElementById("act-loop-root");
+          BH.buildWorlds(root);
+          BH.buildAvatars(root);
+          var K = BH.kit(raw, T0);
+          var tl = K.tl, say = K.say, cam = K.cam, glitch = K.glitch, fire = K.fire, glowPulse = K.glowPulse;
+          var $ = BH.$, $$ = BH.$$, BEAT = BH.BEAT, STEP = BH.STEP;
+          var t;
+  var burst22 = BH.buildBurst("#s22-burst", 14, 22, ["#fffdf2", "#00ffff"]);
+
+  // S21 24.0-25.5 - check slot 1 (half-time). Slot pulses on each beat.
+  t = 24;
+  cam("#s21-cam", "540px 1072px", { scale: 2.2, rotation: 3 }, { scale: 1.8, rotation: -2 }, t, 1.5, "sine.inOut");
+  [0, 1, 2].forEach(function (b) {
+    tl.fromTo("#s21-slot", { scale: 1.18 }, { scale: 1, duration: 0.3, ease: "power2.out" }, t + b * BEAT);
+  });
+  say("#s21-a", "rise", t, 25.5);
+  say("#s21-b", "rise", t + STEP, 25.5);
+  // S22 25.5-27.0 - the hammer lands in your obby.
+  t = 25.5;
+  cam("#s22-cam", "540px 760px", { scale: 1.7 }, { scale: 1.5 }, t, 0.3, "expo.out");
+  tl.to("#s22-cam", { scale: 1.62, duration: 1.2, ease: "none" }, t + 0.3);
+  tl.fromTo("#s22-h", { y: -420, rotation: -20 }, { y: 0, rotation: -4, duration: 0.07, ease: "power4.in" }, t);
+  tl.to("#s22-h", { y: -36, duration: 0.14, ease: "power2.out" }, t + 0.07);
+  tl.to("#s22-h", { y: 0, duration: 0.14, ease: "power2.in" }, t + 0.21);
+  tl.to("#s22-h", { y: -18, rotation: 3, duration: 1.15, ease: "sine.inOut" }, t + 0.35);
+  fire(burst22, t + 0.07, 0.6);
+  say("#s22-a", "stamp", t, 27.0, 1.06);
+  say("#s22-b", "rise", t + STEP, 27.0, 1.04);
+  // S23 27.0-28.5 - POV: your hand reaches in, decelerating (speed ramp).
+  t = 27;
+  cam("#s23-cam", "540px 760px", { scale: 1.5 }, { scale: 1.75 }, t, 1.5, "none");
+  tl.fromTo("#s23-h", { y: -18, rotation: 3 }, { y: 10, rotation: -3, duration: 1.5, ease: "sine.inOut" }, t);
+  tl.fromTo("#s23-arm", { x: 260, y: 760, rotation: -4 }, { x: 0, y: 0, rotation: -12, duration: 1.4, ease: "expo.out" }, t);
+  say("#s23-a", "pop", t + 0.2, 28.5, 1.08);
+  // S24 28.5-30.0 - push 1.0x -> 2.0x onto the hammer; ends on S1's first frame.
+  t = 28.5;
+  cam("#s24-cam", "540px 760px", { scale: 1, rotation: 0 }, { scale: 2, rotation: -3 }, t, 1.5, "power2.in");
+  tl.fromTo("#s24-h", { y: -26, rotation: 4 }, { y: 0, rotation: -4, duration: 1.5, ease: "sine.inOut" }, t);
+  glowPulse("#s24-h .hglow", t, 1.5);
+
+          window.__timelines["act-loop"] = raw;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

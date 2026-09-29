@@ -1,0 +1,6 @@
+node_modules/
+.hyperframes/
+snapshots/
+# renderer scratch space (keep only finished MP4s)
+videos/*/renders/work-*/
+videos/*/renders/.*transaction*/
